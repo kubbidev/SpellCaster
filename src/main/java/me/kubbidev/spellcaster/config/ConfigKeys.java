@@ -61,7 +61,6 @@ public final class ConfigKeys {
      */
     public static final ConfigKey<Boolean> INDICATOR_REGENERATION_ENABLED = booleanKey("indicators.regeneration.enabled", true);
 
-    @SuppressWarnings("UnnecessaryUnicodeEscape")
     public static final ConfigKey<IndicatorConfig> INDICATOR_REGENERATION_CONFIG = key(c -> new IndicatorConfig(
             new DecimalFormat(c.getString("indicators.regeneration.decimal-format", "0.#"), ConfigKeys.DECIMAL_FORMAT_SEPARATOR.get(c)),
             c.getString("indicators.regeneration.format", "<green>+#</green>"),

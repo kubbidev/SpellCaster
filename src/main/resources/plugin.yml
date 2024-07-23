@@ -1,6 +1,6 @@
 name: SpellCaster
 version: ${pluginVersion}
-description: A spell casting Minecraft plugin. Create and cast unique spells with dynamic abilities and comprehensive entity statistics management.
+description: A spell casting Minecraft plugin used to create and cast unique spells with dynamic abilities and comprehensive entity statistics management.
 author: kubbidev
 website: https://kubbidev.com
 main: me.kubbidev.spellcaster.SpellCaster

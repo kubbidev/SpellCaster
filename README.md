@@ -3,7 +3,7 @@
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=for-the-badge)](https://github.com/RichardLitt/standard-readme)
 [![discord-banner](https://img.shields.io/discord/1238666127073345646?label=discord&style=for-the-badge&color=7289da)](https://discord.kubbidev.com)
 
-SpellCaster is a spell casting **Minecraft plugin**. Create and cast unique spells with dynamic abilities and comprehensive entity statistics management.
+SpellCaster is a spell casting **Minecraft plugin** used to create and cast unique spells with dynamic abilities and comprehensive entity statistics management.
 
 Enhance gameplay with powerful and customizable spellcasting features.
 
