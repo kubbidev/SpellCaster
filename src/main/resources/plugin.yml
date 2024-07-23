@@ -1,0 +1,14 @@
+name: SpellCaster
+version: ${pluginVersion}
+description: A spell casting Minecraft plugin. Create and cast unique spells with dynamic abilities and comprehensive entity statistics management.
+author: kubbidev
+website: https://kubbidev.com
+main: me.kubbidev.spellcaster.SpellCaster
+load: STARTUP
+
+# Depend on NexusPowered common library
+depend: [NexusPowered]
+
+# Mark the plugin as 1.13 compatible to avoid CB having to perform quite as much unnecessary
+# remapping when the plugin is loaded.
+api-version: 1.13

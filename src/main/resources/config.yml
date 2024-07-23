@@ -1,0 +1,101 @@
+####################################################################################################
+# +----------------------------------------------------------------------------------------------+ #
+# |                      __   __   ___            __   __   __  ___  ___  __                     | #
+# |                     /__` |__) |__  |    |    /  ` |__| /__`  |  |__  |__)                    | #
+# |                     .__/ |    |___ |___ |___ \__, |  | .__/  |  |___ |  \                    | #
+# |                                                                                              | #
+# |                                      https://kubbidev.com                                    | #
+# |                                                                                              | #
+# |  DISCORD:     https://discord.kubbidev.com                                                   | #
+# |  BUG REPORTS: https://github.com/kubbidev/SpellCaster/issues                                 | #
+# |                                                                                              | #
+# |  New options are not added to this file automatically. Default values are used if an         | #
+# |  option cannot be found.                                                                     | #
+# +----------------------------------------------------------------------------------------------+ #
+####################################################################################################
+
+# +----------------------------------------------------------------------------------------------+ #
+# |                                                                                              | #
+# |                                    CUSTOMIZATION SETTINGS                                    | #
+# |                                                                                              | #
+# |              Settings that allow admins to customize the way SpellCaster operates.           | #
+# |                                                                                              | #
+# +----------------------------------------------------------------------------------------------+ #
+
+# Main number formatting separator symbol used in every decimal formatter across the plugin.
+decimal-format-separator: '.'
+
+# +----------------------------------------------------------------------------------------------+ #
+# | Game indicators settings                                                                     | #
+# +----------------------------------------------------------------------------------------------+ #
+
+# SpellCaster can display indicators in for various reasons.
+#
+# Examples:
+# - when an entity takes damage
+# - when an entity regenerates its life
+indicators:
+  # Indicators displayed when an entity takes damage from any possible source.
+  damage:
+    enabled: true
+    decimal-format: '0.#'
+    format: '{icon} <white>{value}</white>'
+    icon:
+      weapon:
+        normal: '<red>🗡</red>'
+        crit: '<red><bold>🗡</bold></red>'
+      spell:
+        normal: '<gold>★</gold>'
+        crit: '<gold><bold>★</bold></gold>'
+    split-holograms: true
+    gravity: 1
+    radial-velocity: 1
+    initial-upward-velocity: 1
+    entity-height-percent: 0.75
+    entity-y-offset: 0.1
+
+  # Indicators displayed when an entity regenerates its life in all possible ways.
+  regeneration:
+    enabled: true
+    decimal-format: '0.#'
+    format: '<green>+#</green>'
+    gravity: 1
+    radial-velocity: 1
+    initial-upward-velocity: 1
+    entity-height-percent: 0.75
+    entity-y-offset: 0.1
+
+# +----------------------------------------------------------------------------------------------+ #
+# | Interaction rules settings                                                                   | #
+# +----------------------------------------------------------------------------------------------+ #
+
+# If SpellCaster should applied specific rules on entities actions when casting spells
+# or damaging others.
+interaction-rules:
+  enabled: true
+  # When disabled, support-based spells (buffs or heals)
+  # may only be applied onto players.
+  support-spells-on-mobs: true
+  pvp-off:
+    offense:
+      self: false
+    support:
+      party-member: true
+      party-other: true
+      guild-ally: true
+      guild-neutral: true
+      guild-enemy: true
+      self: true
+  pvp-on:
+    offense:
+      party-member: false
+      guild-ally: false
+      guild-neutral: true
+      self: false
+    support:
+      party-member: true
+      party-other: false
+      guild-ally: true
+      guild-neutral: true
+      guild-enemy: false
+      self: true
