@@ -111,21 +111,27 @@ public class DamageIndicator extends AbstractIndicator {
         IndicatorType(DamageMetadata metadata, DamagePacket packet) {
             this.physical = packet.hasType(DamageType.PHYSICAL);
             this.element = packet.getElement();
+            this.crit = isElementCrit(metadata) || (this.physical
+                    // first the easiest way is to check if the element is crit, after if not,
+                    // check the damage type separately depending if the damage is physical or not
+                    ? metadata.isWeaponCrit()
+                    : metadata.isSpellCrit());
+        }
 
-            this.crit = (this.physical ? metadata.isWeaponCrit() : metadata.isSpellCrit())
-                    || (this.element != null && metadata.isElementCrit(this.element));
+        private boolean isElementCrit(@NotNull DamageMetadata metadata) {
+            return this.element != null && metadata.isElementCrit(this.element);
         }
 
         private @NotNull Component computeIcon() {
             TextComponent.Builder builder = Component.text();
             if (this.physical) {
                 builder.append(this.crit
-                        ? config.getWeaponIcon()
-                        : config.getWeaponIconCrit());
+                        ? config.getWeaponIconCrit()
+                        : config.getWeaponIcon());
             } else {
                 builder.append(this.crit
-                        ? config.getSpellIcon()
-                        : config.getSpellIconCrit());
+                        ? config.getSpellIconCrit()
+                        : config.getSpellIcon());
             }
 
             if (this.element != null) {
