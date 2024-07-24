@@ -55,7 +55,7 @@ public record SpellMetadata(Spell cast, EntityMetadata caster, Location source,
      * @return Spell parameter final value, taking into account spell mods
      */
     public double parameter(String parameter) {
-        return EntityMetadataProvider.retrieveModifier(entity()).calculateValue(this.cast, parameter);
+        return EntityMetadataProvider.getSpellModifierMap(entity()).calculateValue(this.cast, parameter);
     }
 
     @Override

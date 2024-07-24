@@ -77,11 +77,11 @@ public class SpellModifier extends InstanceModifier {
 
     @Override
     public void register(@NotNull LivingEntity entity) {
-        EntityMetadataProvider.retrieveModifier(entity).addModifier(this);
+        EntityMetadataProvider.getSpellModifierMap(entity).addModifier(this);
     }
 
     @Override
     public void unregister(@NotNull LivingEntity entity) {
-        EntityMetadataProvider.retrieveModifier(entity).removeModifier(getUniqueId());
+        EntityMetadataProvider.getSpellModifierMap(entity).removeModifier(getUniqueId());
     }
 }

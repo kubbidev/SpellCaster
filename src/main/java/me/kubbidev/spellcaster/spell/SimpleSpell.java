@@ -24,7 +24,7 @@ public class SimpleSpell extends Spell {
 
     @Override
     public boolean getResult(SpellMetadata meta) {
-        return EntityMetadataProvider.retrieveCooldown(meta.entity()).testSilently(this.handler);
+        return EntityMetadataProvider.getCooldownMap(meta.entity()).testSilently(this.handler);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class SimpleSpell extends Spell {
         Cooldown cooldown = Cooldown.of(coolSeconds, TimeUnit.SECONDS);
         cooldown.reset();
 
-        CooldownMap<SpellHandler<?>> cooldownMap = EntityMetadataProvider.retrieveCooldown(meta.entity());
+        CooldownMap<SpellHandler<?>> cooldownMap = EntityMetadataProvider.getCooldownMap(meta.entity());
         cooldownMap.put(this.handler, cooldown);
     }
 

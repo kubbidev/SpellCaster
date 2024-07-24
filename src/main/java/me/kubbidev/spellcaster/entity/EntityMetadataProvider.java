@@ -27,7 +27,7 @@ public final class EntityMetadataProvider {
      * @param entity The entity owning the map.
      * @return cooldown map or new instance if not found
      */
-    public static CooldownMap<SpellHandler<?>> retrieveCooldown(LivingEntity entity) {
+    public static CooldownMap<SpellHandler<?>> getCooldownMap(LivingEntity entity) {
         return Metadata.provide(entity).getOrPut(COOLDOWN_MAP, CooldownMap::create);
     }
 
@@ -42,7 +42,7 @@ public final class EntityMetadataProvider {
      * @param entity The entity owning the map.
      * @return spell modifier map or new instance if not found
      */
-    public static SpellModifierMap retrieveModifier(LivingEntity entity) {
+    public static SpellModifierMap getSpellModifierMap(LivingEntity entity) {
         return Metadata.provide(entity).getOrPut(SPELL_MODIFIER_MAP, () -> new SpellModifierMap(entity));
     }
 }
