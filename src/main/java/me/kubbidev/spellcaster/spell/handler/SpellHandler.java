@@ -16,6 +16,7 @@ import java.util.*;
 public abstract class SpellHandler<T extends SpellResult> {
     private final String id;
     private final Set<String> parameters = new HashSet<>();
+    private final boolean triggerable;
 
     /**
      * Global random number generator used throughout the class.
@@ -26,6 +27,14 @@ public abstract class SpellHandler<T extends SpellResult> {
      * Used by default spell handlers.
      */
     public SpellHandler() {
+        this(true);
+    }
+
+    /**
+     * Used by default spell handlers.
+     */
+    public SpellHandler(boolean triggerable) {
+        this.triggerable = triggerable;
         this.id = InternalMethod.convertToKebabCase(getClass().getSimpleName())
                 .toLowerCase(Locale.ROOT)
                 .replace("-", "_")
@@ -40,6 +49,7 @@ public abstract class SpellHandler<T extends SpellResult> {
      * @param id The spell handler identifier
      */
     public SpellHandler(String id) {
+        this.triggerable = true;
         this.id = id.toLowerCase(Locale.ROOT)
                 .replace("-", "_")
                 .replace(" ", "_");
@@ -61,6 +71,10 @@ public abstract class SpellHandler<T extends SpellResult> {
 
     public void registerParameters(Collection<String> params) {
         this.parameters.addAll(params);
+    }
+
+    public boolean isTriggerable() {
+        return this.triggerable;
     }
 
     /**

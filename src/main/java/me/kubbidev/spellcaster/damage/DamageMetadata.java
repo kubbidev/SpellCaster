@@ -1,5 +1,6 @@
 package me.kubbidev.spellcaster.damage;
 
+import me.kubbidev.spellcaster.element.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

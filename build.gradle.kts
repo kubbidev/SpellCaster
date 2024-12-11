@@ -34,7 +34,7 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
 
     // internal dependencies
-    compileOnly("me.kubbidev.nexuspowered:nexuspowered:1.0-SNAPSHOT")
+    compileOnly("me.kubbidev:nexuspowered:1.0")
 }
 
 publishing {

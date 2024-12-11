@@ -1,14 +1,12 @@
 package me.kubbidev.spellcaster.listener.indicator;
 
-import me.kubbidev.nexuspowered.util.Text;
-import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
 
 public class IndicatorConfig {
     private final DecimalFormat decimalFormat;
-    private final Component format;
+    private final String format;
 
     private final double gravity;
     private final double radialVelocity;
@@ -16,16 +14,16 @@ public class IndicatorConfig {
     private final double entityHeightP;
     private final double entityYOffset;
 
-    public IndicatorConfig(@NotNull DecimalFormat decimalFormat,
-                           @NotNull String format,
-                           double gravity,
-                           double radialVelocity,
-                           double initialUpwardVelocity,
-                           double entityHeightP,
-                           double entityYOffset) {
-
+    public IndicatorConfig(
+            @NotNull DecimalFormat decimalFormat,
+            @NotNull String format,
+            double gravity,
+            double radialVelocity,
+            double initialUpwardVelocity,
+            double entityHeightP,
+            double entityYOffset) {
         this.decimalFormat = decimalFormat;
-        this.format = Text.fromMiniMessage(format);
+        this.format = format;
         this.gravity = gravity;
         this.radialVelocity = radialVelocity;
         this.initialUpwardVelocity = initialUpwardVelocity;
@@ -37,7 +35,7 @@ public class IndicatorConfig {
         return this.decimalFormat;
     }
 
-    public @NotNull Component getFormat() {
+    public @NotNull String getFormat() {
         return this.format;
     }
 

@@ -7,13 +7,13 @@ import me.kubbidev.spellcaster.event.attack.AttackEvent;
 import me.kubbidev.spellcaster.event.attack.EntityAttackEvent;
 import me.kubbidev.spellcaster.event.attack.EntityKillEntityEvent;
 import me.kubbidev.spellcaster.manager.DamageManager;
-import org.bukkit.GameMode;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+
+import static me.kubbidev.spellcaster.InternalMethod.isSpectator;
 
 /**
  * First problem: you want to create a spell which does something whenever
@@ -53,8 +53,7 @@ public class AttackEventListener implements Listener {
         AttackMetadata attack = this.plugin.getDamageManager().findAttack(e);
         if (attack.hasAttacker()) {
             //noinspection DataFlowIssue
-            LivingEntity entity = attack.getAttacker().entity();
-            if (entity instanceof Player && ((Player) entity).getGameMode() == GameMode.SPECTATOR) {
+            if (isSpectator(attack.getAttacker().entity())) {
                 return;
             }
         }

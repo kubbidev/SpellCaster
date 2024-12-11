@@ -5,7 +5,7 @@ import me.kubbidev.spellcaster.SpellCaster;
 import me.kubbidev.spellcaster.damage.AttackMetadata;
 import me.kubbidev.spellcaster.damage.DamageMetadata;
 import me.kubbidev.spellcaster.damage.DamageType;
-import me.kubbidev.spellcaster.damage.Element;
+import me.kubbidev.spellcaster.element.Element;
 import me.kubbidev.spellcaster.util.EquipmentSlot;
 import org.bukkit.entity.LivingEntity;
 import org.jetbrains.annotations.Nullable;

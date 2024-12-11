@@ -4,7 +4,6 @@ import me.kubbidev.nexuspowered.hologram.Hologram;
 import me.kubbidev.nexuspowered.serialize.Position;
 import me.kubbidev.spellcaster.SpellCaster;
 import me.kubbidev.spellcaster.event.indicator.IndicatorDisplayEvent;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Listener;
@@ -35,7 +34,7 @@ public abstract class AbstractIndicator implements Listener {
      * @param message   The message to display
      * @param direction The average direction of the hologram indicator
      */
-    public void displayIndicator(Entity entity, Component message, Vector direction, IndicatorDisplayEvent.IndicatorType type) {
+    public void displayIndicator(Entity entity, String message, Vector direction, IndicatorDisplayEvent.IndicatorType type) {
         IndicatorDisplayEvent called = new IndicatorDisplayEvent(entity, message, type);
         if (!called.callEvent()) return;
 
@@ -57,7 +56,7 @@ public abstract class AbstractIndicator implements Listener {
     private static final int HOLOGRAM_LIFE_SPAN = 7;
 
     @SuppressWarnings("resource")
-    private void displayIndicator(Location location, Component message, Vector direction) {
+    private void displayIndicator(Location location, String message, Vector direction) {
         Hologram hologram = Hologram.create(Position.of(location), Collections.singletonList(message));
         hologram.spawn();
 

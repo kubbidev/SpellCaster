@@ -43,16 +43,16 @@ public final class ConfigKeys {
     @SuppressWarnings("UnnecessaryUnicodeEscape")
     public static final ConfigKey<DamageIndicatorConfig> INDICATOR_DAMAGE_CONFIG = key(c -> new DamageIndicatorConfig(
             new DecimalFormat(c.getString("indicators.damage.decimal-format", "0.#"), ConfigKeys.DECIMAL_FORMAT_SEPARATOR.get(c)),
-            c.getString("indicators.damage.format", "{icon} <white>{value}</white>"),
+            c.getString("indicators.damage.format", "{icon} &f{value}"),
             c.getDouble("indicators.damage.gravity", 1.0),
             c.getDouble("indicators.damage.radial-velocity", 1.0),
             c.getDouble("indicators.damage.initial-upward-velocity", 1.0),
             c.getDouble("indicators.damage.entity-height-percent", 0.75),
             c.getDouble("indicators.damage.entity-y-offset", 0.1),
-            c.getString("indicators.damage.icon.spell.normal", "<gold>\u2605</gold>"),
-            c.getString("indicators.damage.icon.spell.crit", "<gold><bold>\u2605</bold></gold>"),
-            c.getString("indicators.damage.icon.weapon.normal", "<red>\uD83D\uDDE1</red>"),
-            c.getString("indicators.damage.icon.weapon.crit", "<red><bold>\uD83D\uDDE1</bold></red>"),
+            c.getString("indicators.damage.icon.spell.normal", "&6\u2605"),
+            c.getString("indicators.damage.icon.spell.crit", "&6&l\u2605"),
+            c.getString("indicators.damage.icon.weapon.normal", "&c\uD83D\uDDE1"),
+            c.getString("indicators.damage.icon.weapon.crit", "&c&l\uD83D\uDDE1"),
             c.getBoolean("indicators.damage.split-holograms", true)
     ));
 
@@ -63,7 +63,7 @@ public final class ConfigKeys {
 
     public static final ConfigKey<IndicatorConfig> INDICATOR_REGENERATION_CONFIG = key(c -> new IndicatorConfig(
             new DecimalFormat(c.getString("indicators.regeneration.decimal-format", "0.#"), ConfigKeys.DECIMAL_FORMAT_SEPARATOR.get(c)),
-            c.getString("indicators.regeneration.format", "<green>+#</green>"),
+            c.getString("indicators.regeneration.format", "&a+#"),
             c.getDouble("indicators.regeneration.gravity", 1.0),
             c.getDouble("indicators.regeneration.radial-velocity", 1.0),
             c.getDouble("indicators.regeneration.initial-upward-velocity", 1.0),

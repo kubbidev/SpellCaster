@@ -5,6 +5,7 @@ import me.kubbidev.nexuspowered.cooldown.CooldownMap;
 import me.kubbidev.spellcaster.SpellCaster;
 import me.kubbidev.spellcaster.entity.EntityMetadataProvider;
 import me.kubbidev.spellcaster.spell.handler.SpellHandler;
+import me.kubbidev.spellcaster.spell.trigger.TriggerType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,8 +18,8 @@ public class SimpleSpell extends Spell {
     private final SpellHandler<?> handler;
     private final Map<String, Double> modifiers = new HashMap<>();
 
-    public SimpleSpell(SpellCaster plugin, SpellHandler<?> handler) {
-        super(plugin);
+    public SimpleSpell(SpellCaster plugin, TriggerType trigger, SpellHandler<?> handler) {
+        super(plugin, trigger);
         this.handler = handler;
     }
 

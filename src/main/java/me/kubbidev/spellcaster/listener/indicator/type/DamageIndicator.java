@@ -4,14 +4,10 @@ import me.kubbidev.spellcaster.SpellCaster;
 import me.kubbidev.spellcaster.damage.DamageMetadata;
 import me.kubbidev.spellcaster.damage.DamagePacket;
 import me.kubbidev.spellcaster.damage.DamageType;
-import me.kubbidev.spellcaster.damage.Element;
+import me.kubbidev.spellcaster.element.Element;
 import me.kubbidev.spellcaster.event.attack.AttackUnregisteredEvent;
 import me.kubbidev.spellcaster.event.indicator.IndicatorDisplayEvent;
 import me.kubbidev.spellcaster.listener.indicator.AbstractIndicator;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.JoinConfiguration;
-import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.TextReplacementConfig;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -45,7 +41,7 @@ public class DamageIndicator extends AbstractIndicator {
             return;
         }
 
-        List<Component> holograms = new ArrayList<>();
+        List<String> holograms = new ArrayList<>();
         Map<IndicatorType, Double> mappedDamage = new HashMap<>();
         for (DamagePacket packet : e.getMetadata().getPackets()) {
 
@@ -57,11 +53,11 @@ public class DamageIndicator extends AbstractIndicator {
         mappedDamage.forEach((type, value) -> holograms.add(type.computeIndicator(value + modifier)));
 
         if (this.config.isSplitHolograms()) {
-            for (Component hologram : holograms) {
+            for (String hologram : holograms) {
                 displayIndicator(e.getEntity(), hologram, getDirection(e.toBukkit()), IndicatorDisplayEvent.IndicatorType.DAMAGE);
             }
         } else {
-            Component joined = Component.join(JoinConfiguration.spaces(), holograms);
+            String joined = String.join(" ", holograms);
             displayIndicator(e.getEntity(), joined, getDirection(e.toBukkit()), IndicatorDisplayEvent.IndicatorType.DAMAGE);
         }
 
@@ -122,8 +118,8 @@ public class DamageIndicator extends AbstractIndicator {
             return this.element != null && metadata.isElementCrit(this.element);
         }
 
-        private @NotNull Component computeIcon() {
-            TextComponent.Builder builder = Component.text();
+        private @NotNull String computeIcon() {
+            StringBuilder builder = new StringBuilder();
             if (this.physical) {
                 builder.append(this.crit
                         ? config.getWeaponIconCrit()
@@ -135,15 +131,13 @@ public class DamageIndicator extends AbstractIndicator {
             }
 
             if (this.element != null) {
-                builder.append(this.element.getIcon());
+                builder.append(this.element.icon());
             }
-            return builder.build();
+            return builder.toString();
         }
 
-        private @NotNull Component computeIndicator(double d) {
-            return config.getFormat()
-                    .replaceText(TextReplacementConfig.builder().matchLiteral("{icon}").replacement(computeIcon()).build())
-                    .replaceText(TextReplacementConfig.builder().matchLiteral("{value}").replacement(formatDamage(d)).build());
+        private @NotNull String computeIndicator(double d) {
+            return config.getFormat().replace("{icon}", computeIcon()).replace("{value}", formatDamage(d));
         }
     }
 }

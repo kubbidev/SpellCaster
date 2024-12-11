@@ -8,7 +8,6 @@ import me.kubbidev.spellcaster.interaction.InteractionRules;
 import me.kubbidev.spellcaster.interaction.InteractionType;
 import me.kubbidev.spellcaster.interaction.relation.Relationship;
 import me.kubbidev.spellcaster.interaction.relation.RelationshipHandler;
-import org.bukkit.GameMode;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -17,6 +16,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static me.kubbidev.spellcaster.InternalMethod.isSpectator;
 
 public final class EntityManager {
     private final SpellCaster plugin;
@@ -86,12 +87,11 @@ public final class EntityManager {
         }
 
         InteractionRules rules = this.plugin.getConfiguration().get(ConfigKeys.INTERACTION_RULES);
+        if (isSpectator(target)) {
+            return false;
+        }
         // pvp interaction rules
         if (target instanceof Player) {
-            if (((Player) target).getGameMode() == GameMode.SPECTATOR) {
-                return false;
-            }
-
             boolean pvpEnabled = target.getWorld().getPVP();
             if (pvpEnabled) {
                 pvpEnabled = new DamageCheckEvent(source, target, type).callEvent();

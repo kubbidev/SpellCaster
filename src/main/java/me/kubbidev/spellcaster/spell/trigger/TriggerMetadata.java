@@ -16,6 +16,8 @@ import org.jetbrains.annotations.Nullable;
 
 public class TriggerMetadata {
     private final LivingEntity caster;
+    private final TriggerType trigger;
+
     private final EquipmentSlot actionHand;
     private final Location source;
 
@@ -38,40 +40,42 @@ public class TriggerMetadata {
     @Nullable
     private EntityMetadata cachedMetadata;
 
-    public TriggerMetadata(LivingEntity entity) {
-        this(entity, (LivingEntity) null);
+    public TriggerMetadata(LivingEntity entity, TriggerType trigger) {
+        this(entity, trigger, (LivingEntity) null);
     }
 
-    public TriggerMetadata(LivingEntity entity, @Nullable LivingEntity target) {
-        this(entity, EquipmentSlot.MAIN_HAND, entity.getLocation(), target, null, null);
+    public TriggerMetadata(LivingEntity entity, TriggerType trigger, @Nullable LivingEntity target) {
+        this(entity, trigger, EquipmentSlot.MAIN_HAND, entity.getLocation(), target, null, null);
     }
 
-    public TriggerMetadata(LivingEntity entity, @Nullable Location targetLocation) {
-        this(entity, EquipmentSlot.MAIN_HAND, entity.getLocation(), null, targetLocation, null);
+    public TriggerMetadata(LivingEntity entity, TriggerType trigger, @Nullable Location targetLocation) {
+        this(entity, trigger, EquipmentSlot.MAIN_HAND, entity.getLocation(), null, targetLocation, null);
     }
 
-    public TriggerMetadata(LivingEntity entity, Location source, @Nullable Location targetLocation) {
-        this(entity, EquipmentSlot.MAIN_HAND, source, null, targetLocation, null);
+    public TriggerMetadata(LivingEntity entity, TriggerType trigger, Location source, @Nullable Location targetLocation) {
+        this(entity, trigger, EquipmentSlot.MAIN_HAND, source, null, targetLocation, null);
     }
 
     /**
      * The entity responsible for the attack is the one triggering the spell.
      */
-    public TriggerMetadata(EntityAttackEvent event) {
-        this(event.getAttacker(), event.getEntity(), event.getAttack());
+    public TriggerMetadata(EntityAttackEvent event, TriggerType trigger) {
+        this(event.getAttacker(), trigger, event.getEntity(), event.getAttack());
     }
 
-    public TriggerMetadata(EntityMetadata caster, @Nullable Entity target, @Nullable AttackMetadata attack) {
-        this(caster.entity(), caster.actionHand(), caster.entity().getLocation(), target, null, attack);
+    public TriggerMetadata(EntityMetadata caster, TriggerType trigger, @Nullable Entity target, @Nullable AttackMetadata attack) {
+        this(caster.entity(), trigger, caster.actionHand(), caster.entity().getLocation(), target, null, attack);
     }
 
     public TriggerMetadata(LivingEntity caster,
+                           TriggerType trigger,
                            EquipmentSlot actionHand,
                            Location source,
                            @Nullable Entity target,
                            @Nullable Location targetLocation,
                            @Nullable AttackMetadata attack) {
         this.caster = caster;
+        this.trigger = trigger;
         this.actionHand = actionHand;
         this.source = source;
         this.target = target;
@@ -81,6 +85,10 @@ public class TriggerMetadata {
 
     public @NotNull LivingEntity getCaster() {
         return this.caster;
+    }
+
+    public @NotNull TriggerType getTrigger() {
+        return this.trigger;
     }
 
     public @NotNull EquipmentSlot getActionHand() {

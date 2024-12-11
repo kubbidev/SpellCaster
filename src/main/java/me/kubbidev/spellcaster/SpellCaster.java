@@ -2,6 +2,7 @@ package me.kubbidev.spellcaster;
 
 import me.kubbidev.nexuspowered.plugin.ExtendedJavaPlugin;
 import me.kubbidev.spellcaster.listener.AttackEventListener;
+import me.kubbidev.spellcaster.listener.SpellTriggers;
 import me.kubbidev.spellcaster.manager.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -56,6 +57,7 @@ public final class SpellCaster extends ExtendedJavaPlugin {
     private void registerPlatformListeners() {
         registerListener(this.damageManager);
         registerListener(new AttackEventListener(this));
+        registerListener(new SpellTriggers(this));
     }
 
     private void registerApiOnPlatform() {

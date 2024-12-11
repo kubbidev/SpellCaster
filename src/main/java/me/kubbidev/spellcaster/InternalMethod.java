@@ -2,6 +2,7 @@ package me.kubbidev.spellcaster;
 
 import me.kubbidev.nexuspowered.item.ItemStackBuilder;
 import me.kubbidev.spellcaster.interaction.InteractionType;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attributable;
@@ -9,6 +10,8 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
@@ -63,8 +66,8 @@ public final class InternalMethod {
     public static List<Entity> getNearbyChunkEntities(Location location) {
         List<Entity> entities = new ArrayList<>();
 
-        int cx = location.getChunk().getX();
-        int cz = location.getChunk().getZ();
+        int cx = location.getBlockX() >> 4;
+        int cz = location.getBlockZ() >> 4;
 
         for (int x = -1; x < 2; x++) {
             for (int z = -1; z < 2; z++) {
@@ -73,6 +76,17 @@ public final class InternalMethod {
         }
 
         return entities;
+    }
+
+    /**
+     * Checks if the entity is actually in spectator mode.
+     *
+     * @param entity The entity to check.
+     * @return true if the entity is a {@link Player} and is in
+     * spectator, false otherwise.
+     */
+    public static boolean isSpectator(Entity entity) {
+        return entity instanceof Player && ((Player) entity).getGameMode() == GameMode.SPECTATOR;
     }
 
     /**
@@ -126,7 +140,8 @@ public final class InternalMethod {
      * @param allowNegatives Whether negative heal amounts are allowed. If false, healAmount must be positive to heal the entity.
      */
     public static <T extends Damageable & Attributable> void heal(T entity, double healAmount, boolean allowNegatives) {
-        if (!(healAmount > 0) && !allowNegatives) {
+        if (healAmount == 0) return;
+        if (healAmount <= 0 && !allowNegatives) {
             throw new IllegalArgumentException("Heal amount must be strictly positive");
         }
         double currentHealth = entity.getHealth();
@@ -246,7 +261,7 @@ public final class InternalMethod {
 
         ItemStackBuilder itemStack = ItemStackBuilder.of(material);
         if (split.length > 1) {
-            itemStack.customModelData(Integer.parseInt(split[1]));
+            itemStack.transformMeta(i -> i.setCustomModelData(Integer.parseInt(split[1])));
         }
         return itemStack.build();
     }

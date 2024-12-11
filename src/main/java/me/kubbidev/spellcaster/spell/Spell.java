@@ -6,18 +6,23 @@ import me.kubbidev.spellcaster.event.spell.PreSpellCastEvent;
 import me.kubbidev.spellcaster.spell.handler.SpellHandler;
 import me.kubbidev.spellcaster.spell.result.SpellResult;
 import me.kubbidev.spellcaster.spell.trigger.TriggerMetadata;
+import me.kubbidev.spellcaster.spell.trigger.TriggerType;
 import org.bukkit.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public abstract class Spell {
     private final SpellCaster plugin;
+    private final TriggerType trigger;
 
-    public Spell(SpellCaster plugin) {
+    public Spell(@NotNull SpellCaster plugin, @NotNull TriggerType trigger) {
         this.plugin = plugin;
+        this.trigger = Objects.requireNonNull(trigger, "Trigger cannot be null");
     }
 
     public @NotNull SpellResult cast(LivingEntity caster) {
-        return cast(new TriggerMetadata(caster));
+        return cast(new TriggerMetadata(caster, this.trigger));
     }
 
     public @NotNull SpellResult cast(TriggerMetadata triggerMeta) {
@@ -26,6 +31,10 @@ public abstract class Spell {
 
     public @NotNull SpellCaster getPlugin() {
         return this.plugin;
+    }
+
+    public @NotNull TriggerType getTrigger() {
+        return this.trigger;
     }
 
     @SuppressWarnings("unchecked")

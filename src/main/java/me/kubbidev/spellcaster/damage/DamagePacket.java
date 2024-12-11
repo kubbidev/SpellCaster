@@ -1,6 +1,7 @@
 package me.kubbidev.spellcaster.damage;
 
 import com.google.common.base.Preconditions;
+import me.kubbidev.spellcaster.element.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -130,7 +131,7 @@ public class DamagePacket implements Cloneable {
             }
             damageTypes.append(type);
             if (this.element != null) {
-                damageTypes.append(", element=").append(this.element.name());
+                damageTypes.append(", element=").append(this.element);
             }
         }
         return damageTypes.toString();
