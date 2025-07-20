@@ -14,26 +14,21 @@ public class TriggerType {
      * <p>
      * Timer period can be edited using the corresponding spell parameter.
      */
-    @NotNull
-    public static TriggerType TIMER = new TriggerType("TIMER"),
-
+    public static @NotNull TriggerType TIMER = new TriggerType("TIMER");
     /**
      * Used when an entity actively casts a spell.
      * <p>
-     * This is the only trigger type which you can use to create an active spell.
-     * Any other trigger type is used for passive spells.
+     * This is the only trigger type which you can use to create an active spell. Any other trigger type is used for passive spells.
      */
-    CAST = new TriggerType("CAST", false, false),
-
+    public static @NotNull TriggerType CAST  = new TriggerType("CAST", false, false);
     /**
-     * Should be used by plugins when passive spells get triggered by
-     * another cause not listed in {@link TriggerType}.
+     * Should be used by plugins when passive spells get triggered by another cause not listed in {@link TriggerType}.
      * <p>
      * This trigger type is used by any hard coded passive spells.
      *
      * @see SpellHandler#isTriggerable()
      */
-    API = new TriggerType("API");
+    public static @NotNull TriggerType API   = new TriggerType("API");
 
     static {
         register(TIMER);
@@ -43,8 +38,10 @@ public class TriggerType {
 
     private static final Map<String, TriggerType> VALUES = new HashMap<>();
 
-    private final String id;
-    private final boolean silent, passive, actionHandSpecific;
+    private final String  id;
+    private final boolean silent;
+    private final boolean passive;
+    private final boolean actionHandSpecific;
 
     public TriggerType(@NotNull String id) {
         this(id, true, true);
@@ -55,8 +52,7 @@ public class TriggerType {
     }
 
     /**
-     * This constructor is made private to make sure there is only
-     * one trigger type that generates active spells.
+     * This constructor is made private to make sure there is only one trigger type that generates active spells.
      *
      * @param id      The trigger type ID
      * @param silent  Does this trigger type generate silent spells
@@ -67,8 +63,7 @@ public class TriggerType {
     }
 
     /**
-     * This constructor is made private to make sure there is only
-     * one trigger type that generates active spells.
+     * This constructor is made private to make sure there is only one trigger type that generates active spells.
      *
      * @param id      The trigger type ID
      * @param silent  Does this trigger type generate silent spells
@@ -89,17 +84,15 @@ public class TriggerType {
     }
 
     /**
-     * When set to false, any spell with this trigger type should send a message
-     * to the entity if this spell cannot be used.
+     * When set to false, any spell with this trigger type should send a message to the entity if this spell cannot be used.
      */
     public boolean isSilent() {
         return this.silent;
     }
 
     /**
-     * When set to true, spells granted by the item held in the
-     * {@link org.bukkit.inventory.EquipmentSlot#OFF_HAND secondary hand}
-     * (opposite of the action hand) will not be applied.
+     * When set to true, spells granted by the item held in the {@link org.bukkit.inventory.EquipmentSlot#OFF_HAND secondary hand} (opposite
+     * of the action hand) will not be applied.
      * <p>
      * These triggers correspond to item interactions (clicks, attacks).
      */
@@ -121,14 +114,14 @@ public class TriggerType {
 
     public @NotNull String getName() {
         return caseOnWords(name().toLowerCase(Locale.ROOT)
-                .replace("_", " ")
-                .replace("-", " "));
+            .replace("_", " ")
+            .replace("-", " "));
     }
 
     public @NotNull String getLowerCaseId() {
         return name().toLowerCase(Locale.ROOT)
-                .replace("_", "-")
-                .replace(" ", "-");
+            .replace("_", "-")
+            .replace(" ", "-");
     }
 
     /**

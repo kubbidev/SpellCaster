@@ -10,10 +10,10 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.metadata.Metadatable;
 import org.jetbrains.annotations.Nullable;
@@ -24,6 +24,7 @@ import java.util.*;
  * A utility class providing various static methods.
  */
 public final class InternalMethod {
+
     private InternalMethod() {
     }
 
@@ -82,8 +83,7 @@ public final class InternalMethod {
      * Checks if the entity is actually in spectator mode.
      *
      * @param entity The entity to check.
-     * @return true if the entity is a {@link Player} and is in
-     * spectator, false otherwise.
+     * @return true if the entity is a {@link Player} and is in spectator, false otherwise.
      */
     public static boolean isSpectator(Entity entity) {
         return entity instanceof Player && ((Player) entity).getGameMode() == GameMode.SPECTATOR;
@@ -110,8 +110,7 @@ public final class InternalMethod {
     }
 
     /**
-     * Checks if an item stack is considered a weapon based on its durability
-     * (Purely arbitrary but works decently).
+     * Checks if an item stack is considered a weapon based on its durability (Purely arbitrary but works decently).
      *
      * @param item The item stack to check. Can be null.
      * @return true if the item stack is a weapon, false otherwise.
@@ -140,12 +139,14 @@ public final class InternalMethod {
      * @param allowNegatives Whether negative heal amounts are allowed. If false, healAmount must be positive to heal the entity.
      */
     public static <T extends Damageable & Attributable> void heal(T entity, double healAmount, boolean allowNegatives) {
-        if (healAmount == 0) return;
+        if (healAmount == 0) {
+            return;
+        }
         if (healAmount <= 0 && !allowNegatives) {
             throw new IllegalArgumentException("Heal amount must be strictly positive");
         }
         double currentHealth = entity.getHealth();
-        double maxHealth = getAttributeValue(entity, Attribute.GENERIC_MAX_HEALTH);
+        double maxHealth = getAttributeValue(entity, Attribute.MAX_HEALTH);
 
         EntityRegainHealthEvent called = new EntityRegainHealthEvent(entity, healAmount, EntityRegainHealthEvent.RegainReason.CUSTOM);
         if (called.callEvent()) {
@@ -256,12 +257,16 @@ public final class InternalMethod {
     public static ItemStack readIcon(String icon) throws IllegalArgumentException {
         String[] split = icon.split(":");
         Material material = Material.valueOf(split[0].toUpperCase(Locale.ROOT)
-                .replace("-", "_")
-                .replace(" ", "_"));
+            .replace("-", "_")
+            .replace(" ", "_"));
 
         ItemStackBuilder itemStack = ItemStackBuilder.of(material);
         if (split.length > 1) {
-            itemStack.transformMeta(i -> i.setCustomModelData(Integer.parseInt(split[1])));
+            itemStack.transformMeta(meta -> {
+                CustomModelDataComponent customModelDataComponent = meta.getCustomModelDataComponent();
+                customModelDataComponent.setFloats(Collections.singletonList(Float.parseFloat(split[1])));
+                meta.setCustomModelDataComponent(customModelDataComponent);
+            });
         }
         return itemStack.build();
     }

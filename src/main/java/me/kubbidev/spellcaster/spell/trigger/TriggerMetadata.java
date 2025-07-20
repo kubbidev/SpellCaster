@@ -15,11 +15,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class TriggerMetadata {
+
     private final LivingEntity caster;
-    private final TriggerType trigger;
+    private final TriggerType  trigger;
 
     private final EquipmentSlot actionHand;
-    private final Location source;
+    private final Location      source;
 
     @Nullable
     private final Entity target;
@@ -31,11 +32,11 @@ public class TriggerMetadata {
     private final AttackMetadata attack;
 
     /**
-     * The instantiation of an EntityMetadata can be quite intensive in computation,
-     * especially because it can be up to 20 times a second for every player in the server.
+     * The instantiation of an EntityMetadata can be quite intensive in computation, especially because it can be up to 20 times a second
+     * for every player in the server.
      * <p>
-     * For this reason, it's best to NOT generate the EntityMetadata unless it has been
-     * provided beforehand in the constructor, until it's finally asked for in the getter.
+     * For this reason, it's best to NOT generate the EntityMetadata unless it has been provided beforehand in the constructor, until it's
+     * finally asked for in the getter.
      */
     @Nullable
     private EntityMetadata cachedMetadata;

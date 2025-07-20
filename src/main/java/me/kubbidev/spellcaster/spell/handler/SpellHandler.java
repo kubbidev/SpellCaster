@@ -14,9 +14,10 @@ import java.util.*;
  * @param <T> Spell result class being used by that spell behaviour
  */
 public abstract class SpellHandler<T extends SpellResult> {
-    private final String id;
+
+    private final String      id;
     private final Set<String> parameters = new HashSet<>();
-    private final boolean triggerable;
+    private final boolean     triggerable;
 
     /**
      * Global random number generator used throughout the class.
@@ -36,9 +37,9 @@ public abstract class SpellHandler<T extends SpellResult> {
     public SpellHandler(boolean triggerable) {
         this.triggerable = triggerable;
         this.id = InternalMethod.convertToKebabCase(getClass().getSimpleName())
-                .toLowerCase(Locale.ROOT)
-                .replace("-", "_")
-                .replace(" ", "_");
+            .toLowerCase(Locale.ROOT)
+            .replace("-", "_")
+            .replace(" ", "_");
 
         registerParameters("cooldown", "mana", "stamina", "timer", "delay");
     }
@@ -51,8 +52,8 @@ public abstract class SpellHandler<T extends SpellResult> {
     public SpellHandler(String id) {
         this.triggerable = true;
         this.id = id.toLowerCase(Locale.ROOT)
-                .replace("-", "_")
-                .replace(" ", "_");
+            .replace("-", "_")
+            .replace(" ", "_");
 
         registerParameters("cooldown", "mana", "stamina", "timer", "delay");
     }
@@ -80,8 +81,7 @@ public abstract class SpellHandler<T extends SpellResult> {
     /**
      * Gets the spell result used to check if the spell can be cast.
      * <p>
-     * This method evaluates custom conditions, checks if the caster has an entity
-     * in their line of sight, if he is on the ground...
+     * This method evaluates custom conditions, checks if the caster has an entity in their line of sight, if he is on the ground...
      * <p>
      * Runs first before {@link Spell#getResult(SpellMetadata)}
      *

@@ -10,12 +10,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.UUID;
 
 /**
- * Used anywhere where instances similar to {@link org.bukkit.attribute.Attribute}
- * instances are being modified by numerical modifiers.
+ * Used anywhere where instances similar to {@link org.bukkit.attribute.Attribute} instances are being modified by numerical modifiers.
  */
 public abstract class InstanceModifier extends EntityModifier {
 
-    protected final double value;
+    protected final double       value;
     protected final ModifierType type;
 
     public InstanceModifier(String key, double value) {

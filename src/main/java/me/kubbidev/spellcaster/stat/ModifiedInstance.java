@@ -15,12 +15,12 @@ import java.util.function.Predicate;
  * @see InstanceModifier
  */
 public abstract class ModifiedInstance<T extends InstanceModifier> {
+
     protected final Map<UUID, T> modifiers = new ConcurrentHashMap<>();
 
     /**
      * @param base The base value without modifiers.
-     * @return The final modified value taking, into account the default value
-     * as well as all of the modifiers.
+     * @return The final modified value taking, into account the default value as well as all of the modifiers.
      * <p>
      * relative-based modifiers are applied afterwards, onto the sum of the base value + flat modifiers.
      */
@@ -31,8 +31,7 @@ public abstract class ModifiedInstance<T extends InstanceModifier> {
     /**
      * @param base   The base value without modifiers.
      * @param filter Filters modifiers taken into account for the final value computation.
-     * @return The final modified value taking, into account the default value
-     * as well as all of the modifiers.
+     * @return The final modified value taking, into account the default value as well as all of the modifiers.
      * <p>
      * relative-based modifiers are applied afterwards, onto the sum of the base value + flat modifiers.
      */
@@ -42,13 +41,11 @@ public abstract class ModifiedInstance<T extends InstanceModifier> {
 
     /**
      * @param base         The base value without modifiers.
-     * @param modification A modification to any modifier before taking it into account
-     *                     in the final calculation.
+     * @param modification A modification to any modifier before taking it into account in the final calculation.
      *                     <p>
-     *                     This can be used for instance to reduce debuffs, by checking if
-     *                     a stat modifier has a negative value and returning a modifier with a reduced absolute value.
-     * @return The final modified value taking, into account the default value
-     * as well as all of the modifiers.
+     *                     This can be used for instance to reduce debuffs, by checking if a stat modifier has a negative value and
+     *                     returning a modifier with a reduced absolute value.
+     * @return The final modified value taking, into account the default value as well as all of the modifiers.
      * <p>
      * relative-based modifiers are applied afterwards, onto the sum of the base value + flat modifiers.
      */
@@ -59,25 +56,25 @@ public abstract class ModifiedInstance<T extends InstanceModifier> {
     /**
      * @param base         The base value without modifiers.
      * @param filter       Filters modifiers taken into account for the final value computation.
-     * @param modification A modification to any modifier before taking it into account
-     *                     in the final calculation.
+     * @param modification A modification to any modifier before taking it into account in the final calculation.
      *                     <p>
-     *                     This can be used for instance to reduce debuffs, by checking if
-     *                     a stat modifier has a negative value and returning a modifier with a reduced absolute value.
-     * @return The final modified value taking, into account the default value
-     * as well as all of the modifiers.
+     *                     This can be used for instance to reduce debuffs, by checking if a stat modifier has a negative value and
+     *                     returning a modifier with a reduced absolute value.
+     * @return The final modified value taking, into account the default value as well as all of the modifiers.
      * <p>
      * relative-based modifiers are applied afterwards, onto the sum of the base value + flat modifiers.
      */
     public double getFilteredTotal(double base, Predicate<T> filter, Function<T, T> modification) {
         for (T mod : this.modifiers.values()) {
-            if (mod.getType() == ModifierType.FLAT && filter.test(mod))
+            if (mod.getType() == ModifierType.FLAT && filter.test(mod)) {
                 base += modification.apply(mod).getValue();
+            }
         }
 
         for (T mod : this.modifiers.values()) {
-            if (mod.getType() == ModifierType.RELATIVE && filter.test(mod))
+            if (mod.getType() == ModifierType.RELATIVE && filter.test(mod)) {
                 base *= 1 + modification.apply(mod).getValue() / 100.0;
+            }
         }
         return base;
     }
@@ -103,8 +100,7 @@ public abstract class ModifiedInstance<T extends InstanceModifier> {
     }
 
     /**
-     * Iterates through registered modifiers and unregisters them if a
-     * certain condition based on their string key is met.
+     * Iterates through registered modifiers and unregisters them if a certain condition based on their string key is met.
      *
      * @param condition Condition on the modifier key
      */
@@ -113,7 +109,9 @@ public abstract class ModifiedInstance<T extends InstanceModifier> {
             T modifier = iterator.next();
 
             if (condition.test(modifier.getKey())) {
-                if (modifier instanceof Terminable) ((Terminable) modifier).closeAndReportException();
+                if (modifier instanceof Terminable) {
+                    ((Terminable) modifier).closeAndReportException();
+                }
                 iterator.remove();
             }
         }

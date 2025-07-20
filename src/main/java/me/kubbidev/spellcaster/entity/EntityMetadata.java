@@ -11,6 +11,7 @@ import org.bukkit.entity.LivingEntity;
 import org.jetbrains.annotations.Nullable;
 
 public record EntityMetadata(SpellCaster plugin, LivingEntity entity, EquipmentSlot actionHand) {
+
     public EntityMetadata {
         Preconditions.checkArgument(actionHand.isHand(), "Equipment slot must be a hand");
     }
@@ -18,8 +19,7 @@ public record EntityMetadata(SpellCaster plugin, LivingEntity entity, EquipmentS
     /**
      * Utility method that makes an entity deal damage to another specific entity.
      * <p>
-     * This creates the attackMetadata based on the data stored by the CasterMetadata,
-     * and calls it using damage manager.
+     * This creates the attackMetadata based on the data stored by the CasterMetadata, and calls it using damage manager.
      *
      * @param target The target entity.
      * @param damage The damage dealt.
@@ -33,8 +33,7 @@ public record EntityMetadata(SpellCaster plugin, LivingEntity entity, EquipmentS
     /**
      * Utility method that makes an entity deal damage to another specific entity.
      * <p>
-     * This creates the attackMetadata based on the data stored by the CasterMetadata,
-     * and calls it using damage manager.
+     * This creates the attackMetadata based on the data stored by the CasterMetadata, and calls it using damage manager.
      *
      * @param target  The target entity.
      * @param damage  The damage dealt.
@@ -49,8 +48,7 @@ public record EntityMetadata(SpellCaster plugin, LivingEntity entity, EquipmentS
     /**
      * Utility method that makes an entity deal damage to another specific entity.
      * <p>
-     * This creates the attackMetadata based on the data stored by the CasterMetadata,
-     * and calls it using damage manager.
+     * This creates the attackMetadata based on the data stored by the CasterMetadata, and calls it using damage manager.
      *
      * @param target    The target entity.
      * @param damage    The damage dealt.

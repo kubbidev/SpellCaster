@@ -16,9 +16,8 @@ import java.util.UUID;
 /**
  * There is one PassiveSpell instance per passive spell the entity has.
  * <p>
- * Spells that are cast using the casting mode are active and any spell
- * that has to be triggered is passive. The only active spells are the ones cast using
- * the {@link me.kubbidev.spellcaster.spell.trigger.TriggerType#CAST} trigger type.
+ * Spells that are cast using the casting mode are active and any spell that has to be triggered is passive. The only active spells are the
+ * ones cast using the {@link me.kubbidev.spellcaster.spell.trigger.TriggerType#CAST} trigger type.
  */
 public class PassiveSpell extends EntityModifier {
 

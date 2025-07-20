@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class EntityKillEntityEvent extends LivingEntityEvent {
+
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
     public static HandlerList getHandlerList() {
@@ -18,7 +19,7 @@ public class EntityKillEntityEvent extends LivingEntityEvent {
 
     private final EntityDamageEvent event;
 
-    private final LivingEntity target;
+    private final LivingEntity   target;
     private final AttackMetadata attack;
 
     public EntityKillEntityEvent(@NotNull EntityDamageEvent event, @NotNull AttackMetadata attack, @NotNull LivingEntity target) {

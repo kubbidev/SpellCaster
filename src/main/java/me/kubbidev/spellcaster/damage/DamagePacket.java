@@ -11,8 +11,8 @@ import java.util.Objects;
 /**
  * Some damage value weighted by a specific set of damage types.
  * <p>
- * This helps divide any attack into multiple parts that can be manipulated independently.
- * For instance, a melee sword attack would add one {@link DamageType#PHYSICAL} damage packet.
+ * This helps divide any attack into multiple parts that can be manipulated independently. For instance, a melee sword attack would add one
+ * {@link DamageType#PHYSICAL} damage packet.
  */
 public class DamagePacket implements Cloneable {
 
@@ -72,11 +72,9 @@ public class DamagePacket implements Cloneable {
     /**
      * Register a multiplicative damage modifier.
      * <p>
-     * This is used for critical strikes which modifier should
-     * NOT stack up with damage boosting statistics.
+     * This is used for critical strikes which modifier should NOT stack up with damage boosting statistics.
      *
-     * @param coefficient Multiplicative coefficient. 1.5 will
-     *                    increase final damage by 50%
+     * @param coefficient Multiplicative coefficient. 1.5 will increase final damage by 50%
      */
     public void multiplicativeModifier(double coefficient) {
         Preconditions.checkArgument(coefficient >= 0, "Coefficient cannot be negative");
@@ -88,8 +86,7 @@ public class DamagePacket implements Cloneable {
     }
 
     /**
-     * @return Final value of the damage packet taking into account
-     * all the damage modifiers that have been registered
+     * @return Final value of the damage packet taking into account all the damage modifiers that have been registered
      */
     public double getFinalValue() {
         // make sure the returned value is positive
@@ -111,8 +108,8 @@ public class DamagePacket implements Cloneable {
 
         // append value and modifier
         damageTypes.append("\u00a7e").append("(").append(this.value)
-                .append("*").append(this.additiveModifiers)
-                .append("*").append(this.multiplicativeModifiers).append(")").append("x");
+            .append("*").append(this.additiveModifiers)
+            .append("*").append(this.multiplicativeModifiers).append(")").append("x");
 
         // append Scaling
         boolean damageAppended = false;

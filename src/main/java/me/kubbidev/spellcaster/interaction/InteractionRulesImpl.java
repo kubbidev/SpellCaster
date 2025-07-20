@@ -9,7 +9,8 @@ import java.util.Locale;
 import java.util.Map;
 
 public class InteractionRulesImpl implements InteractionRules {
-    private final ConfigurationAdapter adapter;
+
+    private final ConfigurationAdapter          adapter;
     private final Map<InteractionRule, Boolean> interactionRules = new HashMap<>();
 
     public final boolean supportSpellsOnMobs;
@@ -49,12 +50,12 @@ public class InteractionRulesImpl implements InteractionRules {
 
     private void addInteractionRule(@NotNull Relationship relationship, boolean offensive, boolean pvp) {
         String interactionPath = "interaction-rules." + (pvp ? "pvp-on." : "pvp-off.") + (offensive ? "offense." : "support.")
-                + relationship.name().toLowerCase(Locale.ROOT)
-                .replace("_", "-")
-                .replace(" ", "-");
+            + relationship.name().toLowerCase(Locale.ROOT)
+            .replace("_", "-")
+            .replace(" ", "-");
 
         this.interactionRules.put(buildInteractionRule(relationship, offensive, pvp),
-                this.adapter.getBoolean(interactionPath, true)
+            this.adapter.getBoolean(interactionPath, true)
         );
     }
 

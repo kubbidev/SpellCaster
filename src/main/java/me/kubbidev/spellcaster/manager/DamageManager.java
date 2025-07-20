@@ -35,11 +35,12 @@ import static me.kubbidev.spellcaster.InternalMethod.isWeapon;
  * Central piece of the damage system.
  */
 public final class DamageManager implements Listener {
+
     /**
      * Attribute modifier used to cancel the knockback the entity receive when being damaged.
      */
     private static final AttributeModifier NO_KNOCKBACK = new AttributeModifier(new NamespacedKey("spellcaster", "no_knockback"),
-            100, AttributeModifier.Operation.ADD_NUMBER);
+        100, AttributeModifier.Operation.ADD_NUMBER);
 
     /**
      * The singleton plugin instance.
@@ -52,11 +53,10 @@ public final class DamageManager implements Listener {
     private final List<AttackHandler> handlers = new ArrayList<>();
 
     /**
-     * There is an issue with metadata not being garbage-collected on mobs.
-     * It looks like persistent data containers do also suffer from that issue.
+     * There is an issue with metadata not being garbage-collected on mobs. It looks like persistent data containers do also suffer from
+     * that issue.
      * <p>
-     * Switched back to using a weak hash map to save the current attack
-     * metadata for a mob.
+     * Switched back to using a weak hash map to save the current attack metadata for a mob.
      * <p>
      * Weak hash maps are great for garbage collection.
      */
@@ -67,18 +67,16 @@ public final class DamageManager implements Listener {
     }
 
     /**
-     * This method is used to unregister custom {@link AttackMetadata} after everything
-     * was calculated, hence MONITOR priority.
+     * This method is used to unregister custom {@link AttackMetadata} after everything was calculated, hence MONITOR priority.
      * <p>
      * As a safe practice, it does NOT ignore cancelled damage events.
      * <p>
-     * It does however ignore fake events as they are sometimes called for checking interaction rules after the metadata
-     * has been set, but before effects are being applied which can screw things up.
+     * It does however ignore fake events as they are sometimes called for checking interaction rules after the metadata has been set, but
+     * before effects are being applied which can screw things up.
      * <p>
      * This method is ABSOLUTELY NECESSARY.
      * <p>
-     * While SpellCaster does clean up the entity metadata as soon as damage is dealt, vanilla
-     * attacks and extra plugins just don't.
+     * While SpellCaster does clean up the entity metadata as soon as damage is dealt, vanilla attacks and extra plugins just don't.
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void unregisterCustomAttacks(EntityDamageEvent e) {
@@ -97,9 +95,8 @@ public final class DamageManager implements Listener {
     }
 
     /**
-     * {@link AttackHandler}s are used to keep track of details of every
-     * attack so that it can apply damage based stats like PvE damage, Magic
-     * Damage...
+     * {@link AttackHandler}s are used to keep track of details of every attack so that it can apply damage based stats like PvE damage,
+     * Magic Damage...
      *
      * @param handler The damage handler being registered.
      */
@@ -133,8 +130,7 @@ public final class DamageManager implements Listener {
 
 
     /**
-     * Deals damage to an entity. Does not do anything if the
-     * damage is negative or null.
+     * Deals damage to an entity. Does not do anything if the damage is negative or null.
      *
      * @param attack         The class containing all info about the current attack
      * @param knockback      If the attack should deal knockback
@@ -154,42 +150,38 @@ public final class DamageManager implements Listener {
         }
     }
 
-    private void applyDamage(double damage, LivingEntity target, @Nullable LivingEntity damager, boolean knockback, boolean ignoreImmunity) {
+    private void applyDamage(double damage, LivingEntity target, @Nullable LivingEntity damager, boolean knockback,
+                             boolean ignoreImmunity) {
 
-        // should knockback be applied
         if (!knockback) {
-            AttributeInstance instance = target.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE);
+            AttributeInstance instance = target.getAttribute(Attribute.KNOCKBACK_RESISTANCE);
             try {
                 if (instance != null) {
                     instance.addModifier(NO_KNOCKBACK);
                 }
                 applyDamage(damage, target, damager, true, ignoreImmunity);
             } catch (Exception e) {
-                this.plugin.getLogger().log(Level.SEVERE, "Caught an exception (2) while damaging entity '" + target.getUniqueId() + "':", e);
+                this.plugin.getLogger()
+                    .log(Level.SEVERE, "Caught an exception (2) while damaging entity '" + target.getUniqueId() + "':", e);
             } finally {
                 if (instance != null) {
                     instance.removeModifier(NO_KNOCKBACK);
                 }
             }
-            // should damage immunity be taken into account
         } else if (ignoreImmunity) {
             int noDamageTicks = target.getNoDamageTicks();
             try {
                 target.setNoDamageTicks(0);
                 applyDamage(damage, target, damager, true, false);
             } catch (Exception e) {
-                this.plugin.getLogger().log(Level.SEVERE, "Caught an exception (3) while damaging entity '" + target.getUniqueId() + "':", e);
+                this.plugin.getLogger()
+                    .log(Level.SEVERE, "Caught an exception (3) while damaging entity '" + target.getUniqueId() + "':", e);
             } finally {
                 target.setNoDamageTicks(noDamageTicks);
             }
-            // just damage entity
         } else {
             Preconditions.checkArgument(damage > 0, "Damage must be strictly positive");
-            if (damager == null) {
-                target.damage(damage);
-            } else {
-                target.damage(damage, damager);
-            }
+            target.damage(damage, damager);
         }
     }
 
@@ -198,8 +190,8 @@ public final class DamageManager implements Listener {
      * <p>
      * Looks for a RegisteredAttack that would have been registered by other plugins.
      * <p>
-     * If it can't find any plugin that has registered an attack, it checks if it is simply
-     * not just a vanilla attack: {@link ProjectileAttackMetadata} or {@link MeleeAttackMetadata}.
+     * If it can't find any plugin that has registered an attack, it checks if it is simply not just a vanilla attack:
+     * {@link ProjectileAttackMetadata} or {@link MeleeAttackMetadata}.
      * <p>
      * If so it registers this new attack meta to make sure the same attackMeta is provided later on.
      *
@@ -213,7 +205,9 @@ public final class DamageManager implements Listener {
 
         // attack registry
         @Nullable AttackMetadata attackFound = getRegisteredAttackMetadata(entity);
-        if (attackFound != null) return attackFound;
+        if (attackFound != null) {
+            return attackFound;
+        }
 
         // attack registries from other plugins
         for (AttackHandler handler : this.handlers) {
@@ -243,7 +237,8 @@ public final class DamageManager implements Listener {
             if (damager instanceof LivingEntity) {
                 EntityMetadata attacker = new EntityMetadata(this.plugin, (LivingEntity) damager, EquipmentSlot.MAIN_HAND);
 
-                DamageMetadata damage = new DamageMetadata(e.getDamage(), getVanillaDamageTypes((EntityDamageByEntityEvent) e, EquipmentSlot.MAIN_HAND));
+                DamageMetadata damage = new DamageMetadata(e.getDamage(),
+                    getVanillaDamageTypes((EntityDamageByEntityEvent) e, EquipmentSlot.MAIN_HAND));
                 AttackMetadata attack = new MeleeAttackMetadata(damage, entity, attacker);
 
                 markAsMetadata(attack);
@@ -267,7 +262,8 @@ public final class DamageManager implements Listener {
                 if (source != null && !source.equals(entity) && source instanceof LivingEntity) {
                     EntityMetadata attacker = new EntityMetadata(this.plugin, (LivingEntity) source, EquipmentSlot.MAIN_HAND);
 
-                    DamageMetadata damage = new DamageMetadata(e.getDamage(), DamageType.WEAPON, DamageType.PHYSICAL, DamageType.PROJECTILE);
+                    DamageMetadata damage = new DamageMetadata(e.getDamage(), DamageType.WEAPON, DamageType.PHYSICAL,
+                        DamageType.PROJECTILE);
                     AttackMetadata attack = new ProjectileAttackMetadata(damage, entity, attacker, projectile);
 
                     markAsMetadata(attack);
@@ -290,8 +286,7 @@ public final class DamageManager implements Listener {
      * This does NOT apply any damage to the target entity.
      *
      * @param attack The attack metadata being registered.
-     * @return The {@link AttackMetadata} already present on the entity, if it's not
-     * the case it's throws an internal error.
+     * @return The {@link AttackMetadata} already present on the entity, if it's not the case it's throws an internal error.
      */
     public @Nullable AttackMetadata markAsMetadata(AttackMetadata attack) {
         @Nullable AttackMetadata found = this.attackMetadataMap.put(attack.getTarget().getUniqueId(), attack);
@@ -325,7 +320,6 @@ public final class DamageManager implements Listener {
     public DamageType[] getVanillaDamageTypes(EntityDamageEvent.DamageCause cause) {
         switch (cause) {
             case MAGIC:
-            case DRAGON_BREATH:
                 return new DamageType[]{DamageType.MAGIC};
             case POISON:
             case WITHER:
@@ -381,8 +375,9 @@ public final class DamageManager implements Listener {
     public DamageType[] getVanillaDamageTypes(LivingEntity damager, EntityDamageEvent.DamageCause cause, EquipmentSlot hand) {
 
         // not an entity attack
-        if (cause != EntityDamageEvent.DamageCause.ENTITY_ATTACK && cause != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK)
+        if (cause != EntityDamageEvent.DamageCause.ENTITY_ATTACK && cause != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK) {
             return new DamageType[]{DamageType.PHYSICAL};
+        }
 
         // physical attack with bare fists.
         @Nullable ItemStack handItem = null;

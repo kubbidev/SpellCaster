@@ -2,6 +2,7 @@ package me.kubbidev.spellcaster.interaction;
 
 import org.bukkit.entity.LivingEntity;
 
+@FunctionalInterface
 public interface InteractionRestriction {
 
     /**

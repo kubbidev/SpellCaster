@@ -1,40 +1,97 @@
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
+apply("gradle/ver.gradle.kts")
 plugins {
     id("java")
-    id("java-library")
-    alias(libs.plugins.shadow)
     id("maven-publish")
+    alias(libs.plugins.shadow)
 }
 
-// store the version as a variable,
-// as we use it several times
-val fullVersion = "1.0.0"
-
-// project settings
-group = "me.kubbidev.spellcaster"
-version = "1.0-SNAPSHOT"
+group = "me.kubbidev"
 
 base {
     archivesName.set("spellcaster")
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-    // include source in when publishing
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
     withSourcesJar()
 }
 
 repositories {
     mavenCentral()
-    mavenLocal()
     maven("https://repo.papermc.io/repository/maven-public/")
+    repositories {
+        maven(url = "https://nexus.kubbidev.me/repository/maven-releases/") {
+            name = "kubbidev-releases"
+            credentials(PasswordCredentials::class) {
+                username = System.getenv("GRADLE_KUBBIDEV_RELEASES_USER") ?: property("kubbidev-releases-user") as String?
+                password = System.getenv("GRADLE_KUBBIDEV_RELEASES_PASS") ?: property("kubbidev-releases-pass") as String?
+            }
+        }
+    }
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.7-R0.1-SNAPSHOT")
+    compileOnly("me.kubbidev:nexuspowered:2.0.0")
 
-    // internal dependencies
-    compileOnly("me.kubbidev:nexuspowered:1.0")
+    // Unit tests
+    testImplementation("org.testcontainers:junit-jupiter:1.20.4")
+    testImplementation("org.mockito:mockito-core:5.14.2")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.14.2")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.4")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.11.4")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.4")
+}
+
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
+}
+
+tasks.processResources {
+    filesMatching("plugin.yml") {
+        expand("pluginVersion" to "$version")
+    }
+}
+
+tasks.shadowJar {
+    archiveFileName = "SpellCaster-$version.jar"
+    mergeServiceFiles()
+    dependencies {
+        include(dependency("me.kubbidev:.*"))
+    }
+
+    manifest {
+        attributes["paperweight-mappings-namespace"] = "mojang"
+    }
+}
+
+tasks.publish {
+    dependsOn(tasks.shadowJar)
+}
+
+tasks.matching { it.name.startsWith("publish") }.configureEach {
+    doFirst {
+        if (version.toString().contains('+')) {
+            throw GradleException("Refusing to publish non-release version: $version (tag a release first)")
+        }
+    }
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+
+tasks.withType<Test>().configureEach {
+    testLogging {
+        events = setOf(TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED)
+    }
+}
+
+artifacts {
+    archives(tasks.shadowJar)
 }
 
 publishing {
@@ -45,13 +102,14 @@ publishing {
             from(components["java"])
             pom {
                 name = "SpellCaster"
-                description = "A spell casting Minecraft plugin. Create and cast unique spells with dynamic abilities and comprehensive entity statistics management."
-                url = "https://kubbidev.com"
+                description =
+                    "A spell casting Minecraft plugin. Create and cast unique spells with dynamic abilities and comprehensive entity statistics management."
+                url = "https://github.com/kubbidev/SpellCaster"
 
                 licenses {
                     license {
-                        name = "Apache-2.0"
-                        url = "https://www.apache.org/licenses/LICENSE-2.0"
+                        name = "CC BY-NC-SA 4.0"
+                        url = "https://creativecommons.org/licenses/by-nc-sa/4.0/"
                     }
                 }
 
@@ -59,8 +117,7 @@ publishing {
                     developer {
                         id = "kubbidev"
                         name = "kubbi"
-                        url = "https://kubbidev.com"
-                        email = "kubbidev@gmail.com"
+                        url = "https://kubbidev.me"
                     }
                 }
 
@@ -71,31 +128,13 @@ publishing {
             }
         }
     }
-}
-
-// building task operations
-tasks.processResources {
-    filesMatching("plugin.yml") {
-        expand("pluginVersion" to fullVersion)
+    repositories {
+        maven(url = "https://nexus.kubbidev.me/repository/maven-releases/") {
+            name = "kubbidev-releases"
+            credentials(PasswordCredentials::class) {
+                username = System.getenv("GRADLE_KUBBIDEV_RELEASES_USER") ?: property("kubbidev-releases-user") as String?
+                password = System.getenv("GRADLE_KUBBIDEV_RELEASES_PASS") ?: property("kubbidev-releases-pass") as String?
+            }
+        }
     }
-}
-
-tasks.withType<JavaCompile> {
-    options.encoding = "UTF-8"
-}
-
-tasks.shadowJar {
-    archiveFileName = "SpellCaster-${fullVersion}.jar"
-
-    dependencies {
-        include(dependency("me.kubbidev.spellcaster:.*"))
-    }
-
-    manifest {
-        attributes["paperweight-mappings-namespace"] = "mojang"
-    }
-}
-
-artifacts {
-    archives(tasks.shadowJar)
 }

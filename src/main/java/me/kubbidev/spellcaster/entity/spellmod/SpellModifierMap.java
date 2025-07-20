@@ -8,6 +8,7 @@ import org.bukkit.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 
 public class SpellModifierMap extends ModifierMap<SpellModifier> {
+
     public SpellModifierMap(LivingEntity entity) {
         super(entity);
     }
@@ -17,19 +18,21 @@ public class SpellModifierMap extends ModifierMap<SpellModifier> {
     }
 
     public double calculateValue(@NotNull SpellHandler<?> handler, double base, @NotNull String parameter) {
-        for (SpellModifier mod : getModifiers())
+        for (SpellModifier mod : getModifiers()) {
             if (mod.getType() == ModifierType.FLAT
-                    && mod.getParameter().equals(parameter)
-                    && mod.getSpells().contains(handler)) {
+                && mod.getParameter().equals(parameter)
+                && mod.getSpells().contains(handler)) {
                 base += mod.getValue();
             }
+        }
 
-        for (SpellModifier mod : getModifiers())
+        for (SpellModifier mod : getModifiers()) {
             if (mod.getType() == ModifierType.RELATIVE
-                    && mod.getParameter().equals(parameter)
-                    && mod.getSpells().contains(handler)) {
+                && mod.getParameter().equals(parameter)
+                && mod.getSpells().contains(handler)) {
                 base *= 1 + mod.getValue() / 100;
             }
+        }
 
         return base;
     }

@@ -15,6 +15,7 @@ import java.util.Map;
 import static me.kubbidev.spellcaster.InternalMethod.isSpectator;
 
 public class PassiveSpellMap extends ModifierMap<PassiveSpell> {
+
     // string -> spell handler identifier & last time that spell was cast due to a timer
     private final Map<String, Long> lastCast = new HashMap<>();
 
@@ -23,12 +24,10 @@ public class PassiveSpellMap extends ModifierMap<PassiveSpell> {
     }
 
     /**
-     * This method can be used to check if an entity has a specific
-     * passive spell registered in his spell set.
+     * This method can be used to check if an entity has a specific passive spell registered in his spell set.
      * <p>
-     * An entity can have multiple passive spells with the same
-     * spell handler. The output function is completely random
-     * given the use of an HashSet which does not feature order.
+     * An entity can have multiple passive spells with the same spell handler. The output function is completely random given the use of an
+     * HashSet which does not feature order.
      *
      * @param handler Some passive spell handler
      * @return Any passive spell with the same handler
@@ -39,7 +38,7 @@ public class PassiveSpellMap extends ModifierMap<PassiveSpell> {
 
     public void tickTimerSpells() {
         TriggerMetadata triggerMeta = new TriggerMetadata(getEntity(), TriggerType.TIMER, EquipmentSlot.MAIN_HAND,
-                null, null, null, null);
+            null, null, null, null);
 
         for (PassiveSpell passive : getModifiers()) {
             if (!passive.getType().equals(TriggerType.TIMER)) {

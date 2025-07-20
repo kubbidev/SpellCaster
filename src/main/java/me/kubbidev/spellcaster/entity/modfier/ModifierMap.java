@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 public abstract class ModifierMap<T extends EntityModifier> {
+
     private final LivingEntity entity;
 
     /**
@@ -25,8 +26,7 @@ public abstract class ModifierMap<T extends EntityModifier> {
     }
 
     /**
-     * @return The {@link T Modifier}s that have been manipulated so far since the
-     * entity has spawn.
+     * @return The {@link T Modifier}s that have been manipulated so far since the entity has spawn.
      * <p>
      * {@link T Modifier}s are completely flushed when the server restarts.
      */

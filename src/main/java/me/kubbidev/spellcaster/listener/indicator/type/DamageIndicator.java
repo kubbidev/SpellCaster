@@ -24,6 +24,7 @@ import java.util.Map;
 import static me.kubbidev.spellcaster.InternalMethod.isVanished;
 
 public class DamageIndicator extends AbstractIndicator {
+
     private final DamageIndicatorConfig config;
 
     public DamageIndicator(SpellCaster plugin, DamageIndicatorConfig config) {
@@ -64,9 +65,8 @@ public class DamageIndicator extends AbstractIndicator {
     }
 
     /**
-     * If SpellCaster can find a damager, display the
-     * {@link me.kubbidev.nexuspowered.hologram.Hologram}
-     * in a cone which direction is the damager-target line.
+     * If SpellCaster can find a damager, display the {@link me.kubbidev.spellcaster.hologram.Hologram} in a cone which direction is the
+     * damager-target line.
      *
      * @param e the damage event
      * @return The direction of the hologram
@@ -89,6 +89,7 @@ public class DamageIndicator extends AbstractIndicator {
     }
 
     private class IndicatorType {
+
         private final boolean physical;
         private final boolean crit;
 
@@ -108,10 +109,10 @@ public class DamageIndicator extends AbstractIndicator {
             this.physical = packet.hasType(DamageType.PHYSICAL);
             this.element = packet.getElement();
             this.crit = isElementCrit(metadata) || (this.physical
-                    // first the easiest way is to check if the element is crit, after if not,
-                    // check the damage type separately depending if the damage is physical or not
-                    ? metadata.isWeaponCrit()
-                    : metadata.isSpellCrit());
+                // first the easiest way is to check if the element is crit, after if not,
+                // check the damage type separately depending if the damage is physical or not
+                ? metadata.isWeaponCrit()
+                : metadata.isSpellCrit());
         }
 
         private boolean isElementCrit(@NotNull DamageMetadata metadata) {
@@ -122,12 +123,12 @@ public class DamageIndicator extends AbstractIndicator {
             StringBuilder builder = new StringBuilder();
             if (this.physical) {
                 builder.append(this.crit
-                        ? config.getWeaponIconCrit()
-                        : config.getWeaponIcon());
+                    ? config.getWeaponIconCrit()
+                    : config.getWeaponIcon());
             } else {
                 builder.append(this.crit
-                        ? config.getSpellIconCrit()
-                        : config.getSpellIcon());
+                    ? config.getSpellIconCrit()
+                    : config.getSpellIcon());
             }
 
             if (this.element != null) {

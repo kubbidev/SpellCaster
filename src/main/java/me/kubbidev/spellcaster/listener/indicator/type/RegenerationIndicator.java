@@ -4,8 +4,6 @@ import me.kubbidev.spellcaster.SpellCaster;
 import me.kubbidev.spellcaster.event.indicator.IndicatorDisplayEvent;
 import me.kubbidev.spellcaster.listener.indicator.AbstractIndicator;
 import me.kubbidev.spellcaster.listener.indicator.IndicatorConfig;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextReplacementConfig;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -19,6 +17,7 @@ import static me.kubbidev.spellcaster.InternalMethod.getAttributeValue;
 import static me.kubbidev.spellcaster.InternalMethod.isVanished;
 
 public class RegenerationIndicator extends AbstractIndicator {
+
     private final IndicatorConfig config;
 
     public RegenerationIndicator(SpellCaster plugin, IndicatorConfig config) {
@@ -38,13 +37,11 @@ public class RegenerationIndicator extends AbstractIndicator {
             return;
         }
 
-        double maxHealth = getAttributeValue(entity, Attribute.GENERIC_MAX_HEALTH);
+        double maxHealth = getAttributeValue(entity, Attribute.MAX_HEALTH);
         if ((entity.getHealth() + HEAL_EPSILON) > maxHealth) {
             return;
         }
-        Component message = this.config.getFormat()
-                .replaceText(TextReplacementConfig.builder().matchLiteral("#").replacement(formatDamage(e.getAmount())).build());
-
+        String message = this.config.getFormat().replace("#", formatDamage(e.getAmount()));
         displayIndicator(entity, message, getIndicatorDirection(entity), IndicatorDisplayEvent.IndicatorType.REGENERATION);
     }
 

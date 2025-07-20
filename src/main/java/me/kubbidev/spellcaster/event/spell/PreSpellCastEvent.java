@@ -7,6 +7,7 @@ import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
 public class PreSpellCastEvent extends SpellEvent implements Cancellable {
+
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
     public static HandlerList getHandlerList() {
@@ -14,11 +15,10 @@ public class PreSpellCastEvent extends SpellEvent implements Cancellable {
     }
 
     private final SpellResult result;
-    protected boolean cancelled;
+    protected     boolean     cancelled;
 
     /**
-     * Called after checking that a spell can be cast by an entity
-     * right before actually applying its effects.
+     * Called after checking that a spell can be cast by an entity right before actually applying its effects.
      *
      * @param spellMeta The info of the spell being cast.
      * @param result    The spell result.

@@ -4,6 +4,7 @@ import me.kubbidev.spellcaster.interaction.relation.Relationship;
 import org.jetbrains.annotations.NotNull;
 
 public final class EmptyInteractionRules implements InteractionRules {
+
     @Override
     public boolean isSupportSpellsOnMobs() {
         return true;

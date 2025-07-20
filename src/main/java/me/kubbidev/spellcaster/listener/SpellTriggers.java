@@ -9,6 +9,7 @@ import org.jetbrains.annotations.ApiStatus;
 
 @ApiStatus.Experimental
 public class SpellTriggers implements Listener, Runnable {
+
     private final SpellCaster plugin;
 
     public SpellTriggers(SpellCaster plugin) {
@@ -19,6 +20,6 @@ public class SpellTriggers implements Listener, Runnable {
     @Override
     public void run() {
         Metadata.lookupEntitiesWithKey(EntityMetadataProvider.PASSIVE_SPELL_MAP)
-                .forEach((entity, passiveSpellMap) -> passiveSpellMap.tickTimerSpells());
+            .forEach((entity, passiveSpellMap) -> passiveSpellMap.tickTimerSpells());
     }
 }

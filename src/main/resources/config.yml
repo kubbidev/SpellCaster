@@ -52,7 +52,12 @@ indicators:
     radial-velocity: 1
     initial-upward-velocity: 1
     entity-height-percent: 0.75
-    entity-y-offset: 0.1
+    entity-width-percent: 0.75
+    y-offset: 0.1
+    r-offset: 0.1
+    move: true
+    lifespan: 20
+    tick-period: 3
 
   # Indicators displayed when an entity regenerates its life in all possible ways.
   regeneration:
@@ -63,7 +68,12 @@ indicators:
     radial-velocity: 1
     initial-upward-velocity: 1
     entity-height-percent: 0.75
-    entity-y-offset: 0.1
+    entity-width-percent: 0.75
+    y-offset: 0.1
+    r-offset: 0.1
+    move: true
+    lifespan: 20
+    tick-period: 3
 
 # +----------------------------------------------------------------------------------------------+ #
 # | Interaction rules settings                                                                   | #

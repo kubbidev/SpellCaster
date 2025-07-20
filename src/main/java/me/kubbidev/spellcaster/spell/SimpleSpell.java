@@ -15,7 +15,8 @@ import java.util.concurrent.TimeUnit;
  * Can be used to cast a spell handler with configurable modifier input.
  */
 public class SimpleSpell extends Spell {
-    private final SpellHandler<?> handler;
+
+    private final SpellHandler<?>     handler;
     private final Map<String, Double> modifiers = new HashMap<>();
 
     public SimpleSpell(SpellCaster plugin, TriggerType trigger, SpellHandler<?> handler) {

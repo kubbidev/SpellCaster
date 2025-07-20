@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
  * <br>- full info on the damage
  */
 public class AttackUnregisteredEvent extends EntityEvent {
+
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
     public static HandlerList getHandlerList() {
@@ -22,7 +23,7 @@ public class AttackUnregisteredEvent extends EntityEvent {
     }
 
     private final EntityDamageEvent event;
-    private final AttackMetadata attack;
+    private final AttackMetadata    attack;
 
     /**
      * Called whenever a player deals damage to another entity.

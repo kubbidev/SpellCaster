@@ -15,7 +15,9 @@ public abstract class FakeEntityDamageByEntityEvent extends EntityDamageByEntity
     }
 
     @SuppressWarnings("deprecation")
-    public FakeEntityDamageByEntityEvent(@NotNull Entity damager, @NotNull Entity victim, DamageCause cause, @NotNull Map<DamageModifier, Double> modifiers, @NotNull Map<DamageModifier, ? extends Function<? super Double, Double>> modifierFunctions) {
+    public FakeEntityDamageByEntityEvent(@NotNull Entity damager, @NotNull Entity victim, DamageCause cause,
+                                         @NotNull Map<DamageModifier, Double> modifiers,
+                                         @NotNull Map<DamageModifier, ? extends Function<? super Double, Double>> modifierFunctions) {
         super(damager, victim, cause, modifiers, modifierFunctions);
     }
 }

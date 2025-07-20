@@ -16,19 +16,17 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import static me.kubbidev.spellcaster.InternalMethod.isSpectator;
 
 /**
- * First problem: you want to create a spell which does something whenever
- * an entity attacks another given entity, but you have to listen to all the attack
- * types and even abilities.
+ * First problem: you want to create a spell which does something whenever an entity attacks another given entity, but you have to listen to
+ * all the attack types and even abilities.
  * <p>
  * We need some event to generalize every attack, which is {@link EntityAttackEvent}
  * <p>
  * An EntityAttackEvent is called whenever an entity attacks, by any way, another entity.
  * <p>
- * Second problem: if an entity shoots another entity, it's not hard to get the
- * damaging entity, the arrow and trace back its shooter.
+ * Second problem: if an entity shoots another entity, it's not hard to get the damaging entity, the arrow and trace back its shooter.
  * <p>
- * However, if an external plugin damages an entity without telling Spigot that
- * the entity is the damage source, it's impossible to trace back the initial damager.
+ * However, if an external plugin damages an entity without telling Spigot that the entity is the damage source, it's impossible to trace
+ * back the initial damager.
  * <p>
  * {@link DamageManager} gives a way to let know that some entity damaged some entity.
  * <p>
@@ -37,6 +35,7 @@ import static me.kubbidev.spellcaster.InternalMethod.isSpectator;
  * <br>2) of the damage types, that is whether it is a {@link DamageType#SPELL} or {@link DamageType#WEAPON} attack.
  */
 public class AttackEventListener implements Listener {
+
     private final SpellCaster plugin;
 
     public AttackEventListener(SpellCaster plugin) {
@@ -45,7 +44,7 @@ public class AttackEventListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void registerAttacks(EntityDamageEvent e) {
-        // ignore fake events...
+        // Ignore fake events...
         if (!(e.getEntity() instanceof LivingEntity living) || this.plugin.getFakeEventManager().isFake(e)) {
             return;
         }
@@ -59,7 +58,9 @@ public class AttackEventListener implements Listener {
         }
 
         AttackEvent called = attack.hasAttacker() ? new EntityAttackEvent(e, attack) : new AttackEvent(e, attack);
-        if (!called.callEvent()) return;
+        if (!called.callEvent()) {
+            return;
+        }
 
         e.setDamage(attack.getMetadata().getDamage());
 

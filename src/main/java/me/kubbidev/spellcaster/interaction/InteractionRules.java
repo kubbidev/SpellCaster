@@ -6,8 +6,8 @@ import org.jetbrains.annotations.NotNull;
 public interface InteractionRules {
 
     /**
-     * Gets if in general, support spells should also take {@link org.bukkit.entity.Mob}
-     * and {@link org.bukkit.entity.Creature} in count when applied.
+     * Gets if in general, support spells should also take {@link org.bukkit.entity.Mob} and {@link org.bukkit.entity.Creature} in count
+     * when applied.
      *
      * @return true if supported, otherwise false
      */

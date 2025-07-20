@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class IndicatorManager {
+
     private final List<Listener> indicatorsListeners = new ArrayList<>();
 
     /**
@@ -21,7 +22,7 @@ public final class IndicatorManager {
         if (configManager.get(ConfigKeys.INDICATOR_DAMAGE_ENABLED)) {
             try {
                 Listener listener = new DamageIndicator(plugin,
-                        configManager.get(ConfigKeys.INDICATOR_DAMAGE_CONFIG));
+                    configManager.get(ConfigKeys.INDICATOR_DAMAGE_CONFIG));
 
                 plugin.registerListener(listener);
                 this.indicatorsListeners.add(listener);
@@ -32,7 +33,7 @@ public final class IndicatorManager {
         if (configManager.get(ConfigKeys.INDICATOR_REGENERATION_ENABLED)) {
             try {
                 Listener listener = new RegenerationIndicator(plugin,
-                        configManager.get(ConfigKeys.INDICATOR_REGENERATION_CONFIG));
+                    configManager.get(ConfigKeys.INDICATOR_REGENERATION_CONFIG));
 
                 plugin.registerListener(listener);
                 this.indicatorsListeners.add(listener);
@@ -43,8 +44,7 @@ public final class IndicatorManager {
     }
 
     /**
-     * Unregister all listeners, remove them from the list and call the
-     * {@link IndicatorManager#load(SpellCaster)} method.
+     * Unregister all listeners, remove them from the list and call the {@link IndicatorManager#load(SpellCaster)} method.
      */
     public void reload(SpellCaster plugin) {
         // unregister listeners

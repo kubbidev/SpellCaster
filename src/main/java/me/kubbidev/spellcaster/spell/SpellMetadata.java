@@ -97,7 +97,8 @@ public record SpellMetadata(Spell cast, EntityMetadata caster, Location source,
      * @return Target location (and if it exists) OR location of target entity (and if it exists), source location otherwise
      */
     public Location spellLocation(boolean sourceLocation) {
-        return sourceLocation ? this.source.clone() : this.targetLocation != null ? targetLocation() : this.targetEntity != null ? EntityBody.BODY.getLocation(this.targetEntity) : this.source.clone();
+        return sourceLocation ? this.source.clone() : this.targetLocation != null ? targetLocation()
+            : this.targetEntity != null ? EntityBody.BODY.getLocation(this.targetEntity) : this.source.clone();
     }
 
     /**

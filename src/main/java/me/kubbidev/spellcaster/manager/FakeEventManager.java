@@ -8,6 +8,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import java.util.*;
 
 public final class FakeEventManager {
+
     private final Map<Class<?>, Collection<FakeEventCaller<?>>> callers = new HashMap<>();
 
     public FakeEventManager() {
@@ -36,7 +37,11 @@ public final class FakeEventManager {
 
         for (Map.Entry<Class<?>, Collection<FakeEventCaller<?>>> entry : this.callers.entrySet()) {
             if (entry.getKey().isInstance(entry)) {
-                for (FakeEventCaller caller : entry.getValue()) if (caller.isFake(event)) return true;
+                for (FakeEventCaller caller : entry.getValue()) {
+                    if (caller.isFake(event)) {
+                        return true;
+                    }
+                }
             }
         }
         return false;

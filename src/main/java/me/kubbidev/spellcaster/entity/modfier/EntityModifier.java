@@ -10,24 +10,21 @@ import java.util.UUID;
 public abstract class EntityModifier {
 
     /**
-     * Similarly to {@link org.bukkit.attribute.Attribute} modifiers, entity modifiers have a uuid
-     * for differentiation.
+     * Similarly to {@link org.bukkit.attribute.Attribute} modifiers, entity modifiers have a uuid for differentiation.
      * <p>
      * However, it is easier to check the source plugin of the modifier using {@link #getKey()}
      */
     private final UUID uniqueId;
 
     private final ModifierSource source;
-    private final EquipmentSlot slot;
+    private final EquipmentSlot  slot;
 
     /**
      * Identifier given to spells to differentiate them.
      * <p>
-     * Every plugin has a key to be able to manipulate
-     * the triggers that were registered on the entity at any time.
+     * Every plugin has a key to be able to manipulate the triggers that were registered on the entity at any time.
      * <p>
-     * Unlike the uuid, this key is NOT ALWAYS unique in the case
-     * of modifier instances.
+     * Unlike the uuid, this key is NOT ALWAYS unique in the case of modifier instances.
      */
     private final String key;
 

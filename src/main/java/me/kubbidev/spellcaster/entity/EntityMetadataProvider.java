@@ -13,6 +13,7 @@ import org.jetbrains.annotations.ApiStatus;
 @ApiStatus.Experimental
 @ApiStatus.Internal
 public final class EntityMetadataProvider {
+
     private EntityMetadataProvider() {
     }
 
@@ -35,7 +36,8 @@ public final class EntityMetadataProvider {
     /**
      * Metadata key used to retrieve {@link org.bukkit.entity.LivingEntity} spell modifiers map from memory.
      */
-    private static final MetadataKey<SpellModifierMap> SPELL_MODIFIER_MAP = MetadataKey.create("spell_modifier_map", SpellModifierMap.class);
+    private static final MetadataKey<SpellModifierMap> SPELL_MODIFIER_MAP = MetadataKey.create("spell_modifier_map",
+        SpellModifierMap.class);
 
     /**
      * Gets the provided {@link LivingEntity}'s spell modifier map associated to him.

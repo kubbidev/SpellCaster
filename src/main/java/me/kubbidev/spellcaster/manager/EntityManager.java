@@ -20,20 +20,20 @@ import java.util.Set;
 import static me.kubbidev.spellcaster.InternalMethod.isSpectator;
 
 public final class EntityManager {
-    private final SpellCaster plugin;
-    private final Set<InteractionRestriction> restrictions = new HashSet<>();
-    private final Set<RelationshipHandler> relationshipHandlers = new HashSet<>();
+
+    private final SpellCaster                 plugin;
+    private final Set<InteractionRestriction> restrictions         = new HashSet<>();
+    private final Set<RelationshipHandler>    relationshipHandlers = new HashSet<>();
 
     public EntityManager(SpellCaster plugin) {
         this.plugin = plugin;
     }
 
     /**
-     * This should be called by plugins implementing player sets like parties, friends, factions....
-     * any set that could support friendly fire.
+     * This should be called by plugins implementing player sets like parties, friends, factions.... any set that could support friendly
+     * fire.
      * <p>
-     * This is also helpful to prevent players from interacting with
-     * specific invulnerable entities like NPCs.
+     * This is also helpful to prevent players from interacting with specific invulnerable entities like NPCs.
      *
      * @param restriction The new restriction for entities
      * @see InteractionRestriction
@@ -45,8 +45,7 @@ public final class EntityManager {
     /**
      * Plugins which create player groups create relations between entities.
      * <p>
-     * Depending on the type of relationship between entities, two entities
-     * may or may not be able to pvp/cast spells onto each other.
+     * Depending on the type of relationship between entities, two entities may or may not be able to pvp/cast spells onto each other.
      *
      * @param handler The handler for entity relations
      * @see RelationshipHandler
@@ -75,9 +74,10 @@ public final class EntityManager {
 
         // simple verification
         if (source.equals(target) || target.isDead()
-                || !(source instanceof LivingEntity)
-                || !(target instanceof LivingEntity) || target instanceof ArmorStand)
+            || !(source instanceof LivingEntity)
+            || !(target instanceof LivingEntity) || target instanceof ArmorStand) {
             return false;
+        }
 
         // specific plugin restrictions
         for (InteractionRestriction restriction : this.restrictions) {
@@ -102,8 +102,8 @@ public final class EntityManager {
             }
             // otherwise check rules
             return isInteractionAllowed(
-                    (LivingEntity) source,
-                    (LivingEntity) target, rules, type, pvpEnabled);
+                (LivingEntity) source,
+                (LivingEntity) target, rules, type, pvpEnabled);
         } else {
             // pve interaction rules
             return type.isOffense() || rules.isSupportSpellsOnMobs();

@@ -6,6 +6,7 @@ import me.kubbidev.spellcaster.spell.SpellMetadata;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class SpellEvent extends LivingEntityEvent {
+
     private final SpellMetadata spellMeta;
 
     public SpellEvent(SpellMetadata spellMeta) {

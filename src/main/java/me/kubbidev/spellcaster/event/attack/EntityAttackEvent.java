@@ -10,6 +10,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
  * An attack that is called by an entity.
  */
 public class EntityAttackEvent extends AttackEvent implements Cancellable {
+
     private final EntityMetadata attacker;
 
     /**

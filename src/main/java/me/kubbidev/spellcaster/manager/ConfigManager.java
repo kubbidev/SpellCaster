@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.text.DecimalFormat;
 
 public final class ConfigManager {
+
     private final KeyedConfiguration configuration;
 
     private DecimalFormat decimalFormat;
@@ -41,9 +42,8 @@ public final class ConfigManager {
     }
 
     /**
-     * The plugin mostly cache the return value of that method in fields
-     * for easy access, therefore a server restart is required when editing the
-     * decimal-separator option in the config
+     * The plugin mostly cache the return value of that method in fields for easy access, therefore a server restart is required when
+     * editing the decimal-separator option in the config
      *
      * @param pattern Something like "0.#"
      * @return New decimal format with the decimal separator given by the config.

@@ -14,22 +14,19 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * A spell "modifier" modifies a specific parameter of a spell, in the same way that
- * a stat modifier modifies a stat for a player.
+ * A spell "modifier" modifies a specific parameter of a spell, in the same way that a stat modifier modifies a stat for a player.
  * <p>
- * It can also be given a boolean formula, which determines which
- * spells the modifier will apply onto.
+ * It can also be given a boolean formula, which determines which spells the modifier will apply onto.
  */
 public class SpellModifier extends InstanceModifier {
 
     /**
      * The list of all the spells this modifier will be applied to.
      * <p>
-     * A spell modifier can target one spell or a set of spells like
-     * giving for example +10% damage to all the passive spells.
+     * A spell modifier can target one spell or a set of spells like giving for example +10% damage to all the passive spells.
      */
     private final List<SpellHandler<?>> spells;
-    private final String parameter;
+    private final String                parameter;
 
     public SpellModifier(String key, double value, List<SpellHandler<?>> spells, String parameter) {
         this(ModifierSource.OTHER, EquipmentSlot.OTHER, key, value, ModifierType.FLAT, spells, parameter);
@@ -39,13 +36,15 @@ public class SpellModifier extends InstanceModifier {
         this(ModifierSource.OTHER, EquipmentSlot.OTHER, key, value, type, spells, parameter);
     }
 
-    public SpellModifier(ModifierSource source, EquipmentSlot slot, String key, double value, ModifierType type, List<SpellHandler<?>> spells, String parameter) {
+    public SpellModifier(ModifierSource source, EquipmentSlot slot, String key, double value, ModifierType type,
+                         List<SpellHandler<?>> spells, String parameter) {
         super(source, slot, key, value, type);
         this.spells = spells;
         this.parameter = parameter;
     }
 
-    public SpellModifier(UUID uniqueId, ModifierSource source, EquipmentSlot slot, String key, double value, ModifierType type, List<SpellHandler<?>> spells, String parameter) {
+    public SpellModifier(UUID uniqueId, ModifierSource source, EquipmentSlot slot, String key, double value, ModifierType type,
+                         List<SpellHandler<?>> spells, String parameter) {
         super(uniqueId, source, slot, key, value, type);
         this.spells = spells;
         this.parameter = parameter;
@@ -60,19 +59,19 @@ public class SpellModifier extends InstanceModifier {
     }
 
     /**
-     * Used to add a constant to some existing stat modifier, usually an
-     * integer, for instance it is used when a spell buff trigger is triggered multiple times.
+     * Used to add a constant to some existing stat modifier, usually an integer, for instance it is used when a spell buff trigger is
+     * triggered multiple times.
      *
      * @param offset The offset added.
      * @return A new instance of {@link SpellModifier} with modified value
      */
     public @NotNull SpellModifier add(double offset) {
         return new SpellModifier(
-                getUniqueId(),
-                getSource(),
-                getSlot(),
-                getKey(), getValue() + offset,
-                getType(), new ArrayList<>(this.spells), this.parameter);
+            getUniqueId(),
+            getSource(),
+            getSlot(),
+            getKey(), getValue() + offset,
+            getType(), new ArrayList<>(this.spells), this.parameter);
     }
 
     @Override

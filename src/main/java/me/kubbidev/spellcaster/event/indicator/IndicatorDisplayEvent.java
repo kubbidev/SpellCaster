@@ -7,6 +7,7 @@ import org.bukkit.event.entity.EntityEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class IndicatorDisplayEvent extends EntityEvent implements Cancellable {
+
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
     public static HandlerList getHandlerList() {
@@ -16,7 +17,7 @@ public class IndicatorDisplayEvent extends EntityEvent implements Cancellable {
     private boolean cancelled;
 
     private final IndicatorType type;
-    private String text;
+    private       String        text;
 
     /**
      * Called when an entity emits either a damage or a healing indicator.

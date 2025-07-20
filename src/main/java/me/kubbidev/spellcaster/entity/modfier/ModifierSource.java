@@ -3,11 +3,9 @@ package me.kubbidev.spellcaster.entity.modfier;
 import me.kubbidev.spellcaster.util.EquipmentSlot;
 
 /**
- * Main problem solved by the {@link ModifierSource} is being able to
- * calculate specific statistics while ignoring other modifiers.
+ * Main problem solved by the {@link ModifierSource} is being able to calculate specific statistics while ignoring other modifiers.
  * <p>
- * When calculating the entity's when using a main
- * hand weapon, we must completely ignore attack damage given by off-hand modifiers.
+ * When calculating the entity's when using a main hand weapon, we must completely ignore attack damage given by off-hand modifiers.
  *
  * @see EquipmentSlot#isCompatible(EntityModifier)
  */
@@ -16,40 +14,35 @@ public enum ModifierSource {
     /**
      * Modifier given by a melee weapon.
      * <p>
-     * These modifiers should only be taken into account when the
-     * entity wears the item in the main hand.
+     * These modifiers should only be taken into account when the entity wears the item in the main hand.
      */
     MELEE_WEAPON,
 
     /**
      * Modifier given by a ranged weapon.
      * <p>
-     * These modifiers should only be taken into account when the
-     * entity wears the item in the main hand.
+     * These modifiers should only be taken into account when the entity wears the item in the main hand.
      */
     RANGED_WEAPON,
 
     /**
      * Modifier given by an offhand item.
      * <p>
-     * These modifiers should only be taken into account when the
-     * entity wears the item in the offhand.
+     * These modifiers should only be taken into account when the entity wears the item in the offhand.
      */
     OFFHAND_ITEM,
 
     /**
      * Modifier given by a mainhand item.
      * <p>
-     * These modifiers should only be taken into account when the
-     * entity wears the item in the mainhand.
+     * These modifiers should only be taken into account when the entity wears the item in the mainhand.
      */
     MAINHAND_ITEM,
 
     /**
      * Modifier given by a hand item.
      * <p>
-     * These modifiers should only be taken into account when the
-     * entity holds the item in one of their hands.
+     * These modifiers should only be taken into account when the entity holds the item in one of their hands.
      */
     HAND_ITEM,
 

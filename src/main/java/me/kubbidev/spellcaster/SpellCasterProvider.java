@@ -9,11 +9,11 @@ import org.jetbrains.annotations.ApiStatus;
  * instance, however, this provider can be used if this is not viable.</p>
  */
 public final class SpellCasterProvider {
+
     private static SpellCaster instance = null;
 
     /**
-     * Gets an instance of the {@link SpellCaster} API,
-     * throwing {@link IllegalStateException} if the API is not loaded yet.
+     * Gets an instance of the {@link SpellCaster} API, throwing {@link IllegalStateException} if the API is not loaded yet.
      *
      * <p>This method will never return null.</p>
      *
@@ -47,14 +47,15 @@ public final class SpellCasterProvider {
      * Exception thrown when the API is requested before it has been loaded.
      */
     private static final class NotLoadedException extends IllegalStateException {
+
         private static final String MESSAGE = """
-                The SpellCaster API isn't loaded yet!
-                This could be because:
-                  a) the SpellCaster plugin is not installed or it failed to enable
-                  b) the plugin in the stacktrace does not declare a dependency on SpellCaster
-                  c) the plugin in the stacktrace is retrieving the API before the plugin 'enable' phase
-                     (call the #get method in onEnable, not the constructor!)
-                """;
+            The SpellCaster API isn't loaded yet!
+            This could be because:
+              a) the SpellCaster plugin is not installed or it failed to enable
+              b) the plugin in the stacktrace does not declare a dependency on SpellCaster
+              c) the plugin in the stacktrace is retrieving the API before the plugin 'enable' phase
+                 (call the #get method in onEnable, not the constructor!)
+            """;
 
         NotLoadedException() {
             super(MESSAGE);

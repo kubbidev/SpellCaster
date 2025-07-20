@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
  * Represents an LivingEntity-related event
  */
 public abstract class LivingEntityEvent extends Event {
+
     protected final LivingEntity entity;
 
     public LivingEntityEvent(@NotNull LivingEntity entity) {

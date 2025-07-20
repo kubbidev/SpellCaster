@@ -13,8 +13,8 @@ public enum EquipmentSlot {
     /**
      * When placed in any armor slot.
      * <p>
-     * No distinction between helmet, chest plate, leggings and boots unlike vanilla
-     * Minecraft since you can't place a chest plate item inside of the feet slot for instance.
+     * No distinction between helmet, chest plate, leggings and boots unlike vanilla Minecraft since you can't place a chest plate item
+     * inside of the feet slot for instance.
      */
     ARMOR,
 
@@ -34,8 +34,7 @@ public enum EquipmentSlot {
     OFF_HAND,
 
     /**
-     * Fictive equipment slot which overrides all
-     * rules and apply the item stats whatsoever.
+     * Fictive equipment slot which overrides all rules and apply the item stats whatsoever.
      */
     OTHER;
 
@@ -88,12 +87,10 @@ public enum EquipmentSlot {
     /**
      * Every action has a {@link org.bukkit.inventory.EquipmentSlot Hand} associated to it, called the action hand.
      * <p>
-     * It corresponds to the hand the entity is using to perform an action.
-     * By default, SpellCaster uses the {@link org.bukkit.inventory.EquipmentSlot#HAND} if none is specified.
-     * The action hand is the enum value calling this method.
+     * It corresponds to the hand the entity is using to perform an action. By default, SpellCaster uses the
+     * {@link org.bukkit.inventory.EquipmentSlot#HAND} if none is specified. The action hand is the enum value calling this method.
      * <p>
-     * Modifiers from both hands are registered in modifier maps YET filtered out when
-     * calculating stat values/filtering out abilities/...
+     * Modifiers from both hands are registered in modifier maps YET filtered out when calculating stat values/filtering out abilities/...
      *
      * <br>Modifiers from the other hand are ignored IF AND ONLY IF the other hand item is a weapon.
      * <br>As long as the item placement is valid, non-weapon items all apply their modifiers.
@@ -102,8 +99,7 @@ public enum EquipmentSlot {
      *
      * @param modifierSource The source of modifier
      * @param equipmentSlot  The equipment slot of the modifier
-     * @return True if a modifier with the given equipment slot and modifier source should
-     * be taken into account given by the action hand
+     * @return True if a modifier with the given equipment slot and modifier source should be taken into account given by the action hand
      */
     public boolean isCompatible(ModifierSource modifierSource, EquipmentSlot equipmentSlot) {
         Preconditions.checkArgument(isHand(), "Instance called must be a hand equipment slot");

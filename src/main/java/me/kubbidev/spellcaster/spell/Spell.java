@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public abstract class Spell {
+
     private final SpellCaster plugin;
     private final TriggerType trigger;
 
@@ -43,10 +44,14 @@ public abstract class Spell {
 
         // lower level spell restrictions
         T result = handler.getResult(meta);
-        if (!result.isSuccessful()) return result;
+        if (!result.isSuccessful()) {
+            return result;
+        }
 
         // high level spell restrictions
-        if (!getResult(meta)) return result;
+        if (!getResult(meta)) {
+            return result;
+        }
 
         // call first bukkit event
         PreSpellCastEvent called = new PreSpellCastEvent(meta, result);
@@ -66,8 +71,7 @@ public abstract class Spell {
     /**
      * Called when the casting delay (potentially zero) is passed.
      * <p>
-     * This does not call {@link PreSpellCastEvent} and does not
-     * check for both high & low level spell conditions.
+     * This does not call {@link PreSpellCastEvent} and does not check for both high & low level spell conditions.
      * <p>
      * This method however calls {@link PostSpellCastEvent} after spell casting.
      */
@@ -86,8 +90,7 @@ public abstract class Spell {
     }
 
     /**
-     * This method should be used to check for resource costs
-     * or other spell limitations.
+     * This method should be used to check for resource costs or other spell limitations.
      * <p>
      * Runs last after {@link SpellHandler#getResult(SpellMetadata)}.
      *
@@ -99,8 +102,7 @@ public abstract class Spell {
     /**
      * This is not where the actual spell effects are applied.
      * <p>
-     * This method should be used to handle resource costs or
-     * cooldown messages if required.
+     * This method should be used to handle resource costs or cooldown messages if required.
      * <p>
      * Runs first before {@link SpellHandler#whenCast(SpellResult, SpellMetadata)}.
      *
@@ -109,17 +111,15 @@ public abstract class Spell {
     public abstract void whenCast(SpellMetadata meta);
 
     /**
-     * Gets the {@link SpellHandler} containing all effects used to
-     * to be applied on spell casting.
+     * Gets the {@link SpellHandler} containing all effects used to to be applied on spell casting.
      *
      * @return The handler instance of this spell.
      */
     public abstract SpellHandler<?> getHandler();
 
     /**
-     * !! WARNING !! Final spell parameter values also depend
-     * on the entity's spell modifiers, and this method does NOT
-     * take them into account.
+     * !! WARNING !! Final spell parameter values also depend on the entity's spell modifiers, and this method does NOT take them into
+     * account.
      *
      * @param path The modifier name.
      * @return The spell parameter value unaffected by spell modifiers.
