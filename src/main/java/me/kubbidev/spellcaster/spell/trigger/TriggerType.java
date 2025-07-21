@@ -9,18 +9,19 @@ import static me.kubbidev.spellcaster.InternalMethod.caseOnWords;
 
 public class TriggerType {
 
+    private static final   Map<String, TriggerType> VALUES = new HashMap<>();
     /**
      * Casts the spell at regular time intervals.
      * <p>
      * Timer period can be edited using the corresponding spell parameter.
      */
-    public static @NotNull TriggerType TIMER = new TriggerType("TIMER");
+    public static @NotNull TriggerType              TIMER  = new TriggerType("TIMER");
     /**
      * Used when an entity actively casts a spell.
      * <p>
      * This is the only trigger type which you can use to create an active spell. Any other trigger type is used for passive spells.
      */
-    public static @NotNull TriggerType CAST  = new TriggerType("CAST", false, false);
+    public static @NotNull TriggerType              CAST   = new TriggerType("CAST", false, false);
     /**
      * Should be used by plugins when passive spells get triggered by another cause not listed in {@link TriggerType}.
      * <p>
@@ -28,15 +29,7 @@ public class TriggerType {
      *
      * @see SpellHandler#isTriggerable()
      */
-    public static @NotNull TriggerType API   = new TriggerType("API");
-
-    static {
-        register(TIMER);
-        register(CAST);
-        register(API);
-    }
-
-    private static final Map<String, TriggerType> VALUES = new HashMap<>();
+    public static @NotNull TriggerType              API    = new TriggerType("API");
 
     private final String  id;
     private final boolean silent;
@@ -74,6 +67,7 @@ public class TriggerType {
         this.silent = silent;
         this.passive = passive;
         this.actionHandSpecific = actionHandSpecific;
+        VALUES.put(id, this);
     }
 
     /**
@@ -139,11 +133,6 @@ public class TriggerType {
      */
     public static @NotNull TriggerType valueOf(@NotNull String id) {
         return Objects.requireNonNull(VALUES.get(id), "Could not find trigger type with ID '" + id + "'");
-    }
-
-    public static void register(@NotNull TriggerType trigger) {
-        Objects.requireNonNull(trigger, "Trigger type cannot be null");
-        VALUES.put(trigger.name(), trigger);
     }
 
     public static @NotNull Collection<TriggerType> values() {
