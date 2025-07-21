@@ -2,6 +2,7 @@ package me.kubbidev.spellcaster.hologram;
 
 import java.util.List;
 import me.kubbidev.spellcaster.listener.indicator.IndicatorConfig;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -46,9 +47,9 @@ public abstract class Hologram {
         }.runTaskTimer(plugin, 0, config.getTickPeriod());
     }
 
-    public abstract void updateLines(List<String> lines);
+    public abstract void updateLines(List<Component> lines);
 
-    public abstract List<String> getLines();
+    public abstract List<Component> getLines();
 
     public abstract Location getLocation();
 }

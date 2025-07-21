@@ -1,5 +1,6 @@
 package me.kubbidev.spellcaster.event.indicator;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
@@ -17,7 +18,7 @@ public class IndicatorDisplayEvent extends EntityEvent implements Cancellable {
     private boolean cancelled;
 
     private final IndicatorType type;
-    private       String        text;
+    private       Component     text;
 
     /**
      * Called when an entity emits either a damage or a healing indicator.
@@ -26,7 +27,7 @@ public class IndicatorDisplayEvent extends EntityEvent implements Cancellable {
      * @param text   The message displayed
      * @param type   The type of indicator
      */
-    public IndicatorDisplayEvent(@NotNull Entity entity, @NotNull String text, @NotNull IndicatorType type) {
+    public IndicatorDisplayEvent(@NotNull Entity entity, @NotNull Component text, @NotNull IndicatorType type) {
         super(entity);
         this.text = text;
         this.type = type;
@@ -36,11 +37,11 @@ public class IndicatorDisplayEvent extends EntityEvent implements Cancellable {
         return this.type;
     }
 
-    public String getText() {
+    public Component getText() {
         return this.text;
     }
 
-    public void setText(String text) {
+    public void setText(Component text) {
         this.text = text;
     }
 

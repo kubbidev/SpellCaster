@@ -4,6 +4,8 @@ import me.kubbidev.spellcaster.SpellCaster;
 import me.kubbidev.spellcaster.event.indicator.IndicatorDisplayEvent;
 import me.kubbidev.spellcaster.listener.indicator.AbstractIndicator;
 import me.kubbidev.spellcaster.listener.indicator.IndicatorConfig;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextReplacementConfig;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -41,7 +43,12 @@ public class RegenerationIndicator extends AbstractIndicator {
         if ((entity.getHealth() + HEAL_EPSILON) > maxHealth) {
             return;
         }
-        String message = this.config.getFormat().replace("#", formatDamage(e.getAmount()));
+        Component message = this.config.getFormat()
+            .replaceText(TextReplacementConfig.builder()
+                .matchLiteral("#")
+                .replacement(formatDamage(e.getAmount()))
+                .build()
+            );
         displayIndicator(entity, message, getIndicatorDirection(entity), IndicatorDisplayEvent.IndicatorType.REGENERATION);
     }
 

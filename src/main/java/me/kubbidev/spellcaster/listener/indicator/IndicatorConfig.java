@@ -1,21 +1,27 @@
 package me.kubbidev.spellcaster.listener.indicator;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
 
 public class IndicatorConfig {
 
+    protected static Component deserialize(String string) {
+        return MiniMessage.miniMessage().deserialize(string);
+    }
+
     private final DecimalFormat decimalFormat;
-    private final String        format;
+    private final Component     format;
 
     private final double  gravity;
     private final double  radialVelocity;
     private final double  initialUpwardVelocity;
     private final double  entityHeightPercent;
-    private final double entityWidthPercent;
-    private final double yOffset;
-    private final double rOffset;
+    private final double  entityWidthPercent;
+    private final double  yOffset;
+    private final double  rOffset;
     private final boolean move;
     private final long    lifespan;
     private final long    tickPeriod;
@@ -35,7 +41,7 @@ public class IndicatorConfig {
         long tickPeriod
     ) {
         this.decimalFormat = decimalFormat;
-        this.format = format;
+        this.format = deserialize(format);
         this.gravity = gravity;
         this.radialVelocity = radialVelocity;
         this.initialUpwardVelocity = initialUpwardVelocity;
@@ -52,7 +58,7 @@ public class IndicatorConfig {
         return this.decimalFormat;
     }
 
-    public @NotNull String getFormat() {
+    public @NotNull Component getFormat() {
         return this.format;
     }
 

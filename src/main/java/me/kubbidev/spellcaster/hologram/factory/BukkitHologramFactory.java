@@ -24,7 +24,7 @@ public class BukkitHologramFactory implements HologramFactory /*, Listener*/ {
     }
 
     @Override
-    public @NotNull Hologram newHologram(@NotNull Location loc, @NotNull List<String> lines) {
+    public @NotNull Hologram newHologram(@NotNull Location loc, @NotNull List<Component> lines) {
         return new HologramImpl(loc, lines);
     }
 
@@ -33,13 +33,13 @@ public class BukkitHologramFactory implements HologramFactory /*, Listener*/ {
         private static final double LINE_OFFSET = 0.25;
         private static final double EPSILON     = 1e-5;
 
-        private final List<String>      lines           = new ArrayList<>();
+        private final List<Component>   lines           = new ArrayList<>();
         private final List<TextDisplay> spawnedEntities = new ArrayList<>();
 
         private Location loc;
         private boolean  spawned = false;
 
-        HologramImpl(@NotNull Location loc, @NotNull List<String> lines) {
+        HologramImpl(@NotNull Location loc, @NotNull List<Component> lines) {
             this.loc = Objects.requireNonNull(loc, "Location cannot be null").clone();
             this.updateLines(lines);
             this.spawn();
@@ -73,10 +73,10 @@ public class BukkitHologramFactory implements HologramFactory /*, Listener*/ {
         }
 
         @Override
-        public void updateLines(List<String> lines) {
+        public void updateLines(List<Component> lines) {
             Objects.requireNonNull(lines, "lines");
             Preconditions.checkArgument(!lines.isEmpty(), "Lines cannot be empty");
-            for (String line : lines) {
+            for (Component line : lines) {
                 Preconditions.checkArgument(line != null, "Null line");
             }
 
@@ -86,7 +86,7 @@ public class BukkitHologramFactory implements HologramFactory /*, Listener*/ {
         }
 
         @Override
-        public List<String> getLines() {
+        public List<Component> getLines() {
             return this.lines;
         }
 
@@ -101,13 +101,13 @@ public class BukkitHologramFactory implements HologramFactory /*, Listener*/ {
 
         private void spawn() {
             Location clone = loc.clone();
-            for (String line : this.lines) {
+            for (Component line : this.lines) {
                 TextDisplay as = clone.getWorld().spawn(clone, TextDisplay.class);
                 as.setBillboard(Display.Billboard.CENTER);
                 // as.setInterpolationDuration(INTERPOLATION_DURATION);
 
                 this.spawnedEntities.add(as);
-                as.text(Component.text(line));
+                as.text(line);
                 clone.subtract(0, LINE_OFFSET, 0);
             }
 

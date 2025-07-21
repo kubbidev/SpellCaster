@@ -8,6 +8,10 @@ import me.kubbidev.spellcaster.element.Element;
 import me.kubbidev.spellcaster.event.attack.AttackUnregisteredEvent;
 import me.kubbidev.spellcaster.event.indicator.IndicatorDisplayEvent;
 import me.kubbidev.spellcaster.listener.indicator.AbstractIndicator;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.JoinConfiguration;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.TextReplacementConfig;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -42,7 +46,7 @@ public class DamageIndicator extends AbstractIndicator {
             return;
         }
 
-        List<String> holograms = new ArrayList<>();
+        List<Component> holograms = new ArrayList<>();
         Map<IndicatorType, Double> mappedDamage = new HashMap<>();
         for (DamagePacket packet : e.getMetadata().getPackets()) {
 
@@ -54,11 +58,11 @@ public class DamageIndicator extends AbstractIndicator {
         mappedDamage.forEach((type, value) -> holograms.add(type.computeIndicator(value + modifier)));
 
         if (this.config.isSplitHolograms()) {
-            for (String hologram : holograms) {
+            for (Component hologram : holograms) {
                 displayIndicator(e.getEntity(), hologram, getDirection(e.toBukkit()), IndicatorDisplayEvent.IndicatorType.DAMAGE);
             }
         } else {
-            String joined = String.join(" ", holograms);
+            Component joined = Component.join(JoinConfiguration.spaces(), holograms);
             displayIndicator(e.getEntity(), joined, getDirection(e.toBukkit()), IndicatorDisplayEvent.IndicatorType.DAMAGE);
         }
 
@@ -119,8 +123,8 @@ public class DamageIndicator extends AbstractIndicator {
             return this.element != null && metadata.isElementCrit(this.element);
         }
 
-        private @NotNull String computeIcon() {
-            StringBuilder builder = new StringBuilder();
+        private @NotNull Component computeIcon() {
+            TextComponent.Builder builder = Component.text();
             if (this.physical) {
                 builder.append(this.crit
                     ? config.getWeaponIconCrit()
@@ -134,11 +138,13 @@ public class DamageIndicator extends AbstractIndicator {
             if (this.element != null) {
                 builder.append(this.element.icon());
             }
-            return builder.toString();
+            return builder.build();
         }
 
-        private @NotNull String computeIndicator(double d) {
-            return config.getFormat().replace("{icon}", computeIcon()).replace("{value}", formatDamage(d));
+        private @NotNull Component computeIndicator(double d) {
+            return config.getFormat()
+                .replaceText(TextReplacementConfig.builder().matchLiteral("{icon}").replacement(computeIcon()).build())
+                .replaceText(TextReplacementConfig.builder().matchLiteral("{value}").replacement(formatDamage(d)).build());
         }
     }
 }

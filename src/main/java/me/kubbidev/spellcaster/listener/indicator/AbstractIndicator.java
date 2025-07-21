@@ -6,6 +6,7 @@ import me.kubbidev.spellcaster.SpellCaster;
 import me.kubbidev.spellcaster.event.indicator.IndicatorDisplayEvent;
 import me.kubbidev.spellcaster.hologram.Hologram;
 import me.kubbidev.spellcaster.hologram.factory.BukkitHologramFactory;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -36,7 +37,7 @@ public abstract class AbstractIndicator implements Listener {
      * @param message The message to display
      * @param dir     The average direction of the hologram indicator
      */
-    public void displayIndicator(Entity entity, String message, Vector dir, IndicatorDisplayEvent.IndicatorType type) {
+    public void displayIndicator(Entity entity, Component message, Vector dir, IndicatorDisplayEvent.IndicatorType type) {
         IndicatorDisplayEvent called = new IndicatorDisplayEvent(entity, message, type);
         if (!called.callEvent()) {
             return;

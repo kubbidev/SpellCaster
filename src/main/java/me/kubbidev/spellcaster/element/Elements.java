@@ -1,21 +1,31 @@
 package me.kubbidev.spellcaster.element;
 
+import static net.kyori.adventure.text.Component.text;
+import static net.kyori.adventure.text.format.NamedTextColor.AQUA;
+import static net.kyori.adventure.text.format.NamedTextColor.DARK_AQUA;
+import static net.kyori.adventure.text.format.NamedTextColor.DARK_GRAY;
+import static net.kyori.adventure.text.format.NamedTextColor.GOLD;
+import static net.kyori.adventure.text.format.NamedTextColor.GRAY;
+import static net.kyori.adventure.text.format.NamedTextColor.RED;
+import static net.kyori.adventure.text.format.NamedTextColor.WHITE;
+import static net.kyori.adventure.text.format.NamedTextColor.YELLOW;
+
 @SuppressWarnings({"UnnecessaryUnicodeEscape"})
 interface Elements {
 
-    Element FIRE = BuiltinElement.get("&c\uD83D\uDD25");
+    Element FIRE = BuiltinElement.get(text("\uD83D\uDD25", RED));
 
-    Element ICE = BuiltinElement.get("&b\u2744");
+    Element ICE = BuiltinElement.get(text('\u2744', AQUA));
 
-    Element EARTH = BuiltinElement.get("&3\u20AA");
+    Element EARTH = BuiltinElement.get(text('\u20AA', GOLD));
 
-    Element WIND = BuiltinElement.get("&7\uD83C\uDF0A");
+    Element WIND = BuiltinElement.get(text("\uD83C\uDF0A", GRAY));
 
-    Element THUNDER = BuiltinElement.get("&e\u2605");
+    Element THUNDER = BuiltinElement.get(text('\u2605', YELLOW));
 
-    Element WATER = BuiltinElement.get("&3\uD83C\uDF0A");
+    Element WATER = BuiltinElement.get(text("\uD83C\uDF0A", DARK_AQUA));
 
-    Element DARKNESS = BuiltinElement.get("&8\u263D");
+    Element DARKNESS = BuiltinElement.get(text('\u263D', DARK_GRAY));
 
-    Element LIGHTNESS = BuiltinElement.get("&f\u2600");
+    Element LIGHTNESS = BuiltinElement.get(text('\u2600', WHITE));
 }

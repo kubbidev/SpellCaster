@@ -1,18 +1,19 @@
 package me.kubbidev.spellcaster.listener.indicator.type;
 
 import me.kubbidev.spellcaster.listener.indicator.IndicatorConfig;
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
 
 public class DamageIndicatorConfig extends IndicatorConfig {
 
-    private final String spellIcon;
-    private final String spellIconCrit;
+    private final Component spellIcon;
+    private final Component spellIconCrit;
 
-    private final String  weaponIcon;
-    private final String  weaponIconCrit;
-    private final boolean splitHolograms;
+    private final Component weaponIcon;
+    private final Component weaponIconCrit;
+    private final boolean   splitHolograms;
 
     public DamageIndicatorConfig(
         @NotNull DecimalFormat decimalFormat,
@@ -35,27 +36,27 @@ public class DamageIndicatorConfig extends IndicatorConfig {
         super(decimalFormat, format, gravity, radialVelocity, initialUpwardVelocity, entityHeightPercent, entityWidthPercent, yOffset,
             rOffset, move, lifespan, tickPeriod);
 
-        this.spellIcon = spellIcon;
-        this.spellIconCrit = spellIconCrit;
+        this.spellIcon = deserialize(spellIcon);
+        this.spellIconCrit = deserialize(spellIconCrit);
 
-        this.weaponIcon = weaponIcon;
-        this.weaponIconCrit = weaponIconCrit;
+        this.weaponIcon = deserialize(weaponIcon);
+        this.weaponIconCrit = deserialize(weaponIconCrit);
         this.splitHolograms = splitHolograms;
     }
 
-    public @NotNull String getSpellIcon() {
+    public @NotNull Component getSpellIcon() {
         return this.spellIcon;
     }
 
-    public @NotNull String getSpellIconCrit() {
+    public @NotNull Component getSpellIconCrit() {
         return this.spellIconCrit;
     }
 
-    public @NotNull String getWeaponIcon() {
+    public @NotNull Component getWeaponIcon() {
         return this.weaponIcon;
     }
 
-    public @NotNull String getWeaponIconCrit() {
+    public @NotNull Component getWeaponIconCrit() {
         return this.weaponIconCrit;
     }
 
